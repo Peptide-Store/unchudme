@@ -49,7 +49,7 @@ const PRODUCTS = [
   // ---- blends ----
   { id: "bpc-tb", name: "BPC-157 + TB-500", cat: "blend", aka: "BB10 BB20",
     sizes: [o("BPC 10 mg + TB 10 mg")] },
-  { id: "cjc-ipa", name: "CJC (without DAC) + Ipamorelin", cat: "blend", aka: "CP10 CP20",
+  { id: "cjc-ipa", name: "CJC-1295 (without DAC) + Ipamorelin", cat: "blend", aka: "CP10 CP20",
     sizes: [o("CJC 10 mg + Ipa 10 mg")] },
   { id: "klow", name: "KLOW", cat: "blend", aka: "KLOW80",
     sizes: mg(80) },
