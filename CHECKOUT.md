@@ -12,7 +12,7 @@ How a customer pays on the Aura Pharma site. Built 2026-10-17. Two ways to pay: 
 4. The order is created and the cart is emptied. The page becomes the **order status** view (`checkout.html?order=AO-1001`; guests get `&t=<secret token>`, also remembered on their device, and are told to bookmark it):
    - **Invoice:** "We'll email an invoice for $X to you within one business day; reference AO-1001."
    - **Crypto:** goes straight to the NOWPayments payment page. Coming back shows the status, a **Pay with crypto** button to return to the payment page, and it re-checks every 20 s until the payment lands.
-5. **Account page** lists the customer's orders with status; each links to its status view.
+5. **Account → Orders tab** (`account.html?tab=orders`): in-progress orders (unpaid, paid, or shipped in the last 14 days) and past orders, each with a Placed → Paid → Shipped tracker, its items, the tracking number linked to the carrier (USPS / UPS / FedEx by number format), **Buy again** (puts the items still sold back in the cart) and **View order**. Tracking appears once you fill in `tracking` on the order.
 
 ## Prices and shipping
 

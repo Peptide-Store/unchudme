@@ -4,6 +4,12 @@ What changed on the Aura Pharma storefront and why. Newest first. The certificat
 
 > Public repo: no supplier names, supplier batches, lab task numbers or verification keys here.
 
+## 2026-10-17 — Orders tab on the account page
+
+- **Account → Orders** (`account.html?tab=orders`, linked from the order page's "Your orders"): in-progress and past orders with a Placed → Paid → Shipped tracker, items with vial thumbnails, tracking linked to the carrier, Track package, Pay now (unpaid crypto), Buy again and View order. Replaces the short order list under the profile.
+- Tracking numbers on the order page are now links too (`trackUrl()` in app.js).
+- BAC water 3 ml priced at $5.00 (manual price in `research/apply-pricing.mjs`).
+
 ## 2026-10-17 — Catalog trimmed to 19 sizes; one inventory record
 
 - **Catalog:** 17 products, 19 sizes: GLP1-R 10 mg, GLP1-T 10 mg, Tesamorelin 10 mg, Ipamorelin 10 mg, MOTS-c 10 and 40 mg, SS-31 10 mg (back), BPC-157 10 mg, TB-500 10 mg, Adamax 10 mg, Melanotan II 10 mg (was "Standard vial"), GHK-Cu 50 and 100 mg, BPC-157 + TB-500 10 + 10 mg, CJC-1295 + Ipamorelin 10 + 10 mg, KLOW 80 mg, Epitalon 50 mg, NAD+ 500 mg, and BAC water 3 ml (new "Supplies" category; price on request until set). Dropped: GLP1-S, CJC-1295, KPV, Selank, Semax, Melanotan I, GLOW and the other sizes. Lab reports for sizes no longer sold are hidden from the site.

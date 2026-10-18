@@ -34,6 +34,14 @@ const RUO_LONG = `All products sold by ${BRAND.name} are intended solely for in 
 const optSlug = (label) => label.toLowerCase().replace(/[^a-z0-9.]+/g, "-").replace(/^-|-$/g, "");
 // media/ is served with a 1-year immutable cache — bump MEDIA_V whenever the vial renders change
 const MEDIA_V = 12;
+// a tracking number → the carrier's tracking page (USPS, UPS, FedEx; anything else goes to a multi-carrier lookup)
+const trackUrl = (t) => {
+  const n = String(t).replace(/\s+/g, "");
+  if (/^1Z[0-9A-Z]{16}$/i.test(n)) return `https://www.ups.com/track?tracknum=${n}`;
+  if (/^(9[1-5]\d{18,24}|[A-Z]{2}\d{9}US)$/i.test(n)) return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${n}`;
+  if (/^(\d{12}|\d{15}|\d{20})$/.test(n)) return `https://www.fedex.com/fedextrack/?trknbr=${n}`;
+  return `https://parcelsapp.com/en/tracking/${encodeURIComponent(n)}`;
+};
 const vialImg = (p, s) => `media/vials/${p.id}--${optSlug(s.label)}.webp?v=${MEDIA_V}`;
 
 // Logo: a dark crossbarless "A" rising over a planet horizon — lit blade edges, a beam off the apex, a star in the counter.

@@ -49,6 +49,9 @@ const PRICES = {
  },
  "nad": {
   "500 mg": 75.99
+ },
+ "bac-water": {
+  "3 ml": 5
  }
 };
 PRODUCTS.forEach((p) => p.sizes.forEach((s) => { const v = PRICES[p.id]?.[s.label]; if (v != null) s.price = v; }));

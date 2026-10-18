@@ -150,7 +150,7 @@
            <button class="btn primary" id="co-pay">${o.crypto_invoice_url ? "Return to the crypto payment page" : "Pay with crypto"}</button>
            <p class="muted co-small">Already paid? Confirmation can take a few minutes; this page updates when it arrives.</p>`,
       paid: `<p>Payment received${o.paid_at ? ` on ${new Date(o.paid_at).toLocaleDateString("en-US", { month: "long", day: "numeric" })}` : ""}. We'll email tracking to ${esc(o.email)} when it ships.</p>`,
-      shipped: `<p>Your order has shipped.${o.tracking ? ` Tracking: <b class="mono">${esc(o.tracking)}</b>.` : ""}</p>`,
+      shipped: `<p>Your order has shipped.${o.tracking ? ` Tracking: <a class="mono" href="${trackUrl(o.tracking)}" target="_blank" rel="noopener">${esc(o.tracking)}</a>` : ""}</p>`,
       cancelled: `<p>This order was cancelled. Questions: <a href="mailto:support@aurapharma.us">support@aurapharma.us</a>.</p>`,
     }[o.status];
     root.innerHTML = `<div class="co-grid"><div>
@@ -159,7 +159,7 @@
         <p class="portal-msg" role="status" id="co-msg"></p>`)}
       ${panel(`<h3>Ship to</h3><p class="co-address">${[o.ship_name, o.ship_line1, o.ship_line2, `${o.ship_city}, ${o.ship_state} ${o.ship_zip}`].filter(Boolean).map(esc).join("<br>")}</p>
         ${token ? `<p class="muted co-small">Bookmark this page to check on your order; the link is private to you.</p>` : ""}
-        <div class="co-actions"><a class="btn" href="shop.html">Continue shopping</a>${token ? "" : `<a class="btn" href="account.html">Your orders</a>`}</div>`)}
+        <div class="co-actions"><a class="btn" href="shop.html">Continue shopping</a>${token ? "" : `<a class="btn" href="account.html?tab=orders">Your orders</a>`}</div>`)}
     </div>
     <aside class="co-summary"><h3>Items</h3>
       ${o.items.map((i) => `<div class="co-line co-line-plain"><div><b>${esc(i.name)}</b><span class="muted mono">${esc(sizeText(i.label))} × ${i.qty}</span></div><span class="mono">${money(i.price * i.qty)}</span></div>`).join("")}
