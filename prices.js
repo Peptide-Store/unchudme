@@ -42,7 +42,7 @@ const PRICES = {
   "CJC 10 mg + Ipa 10 mg": 75
  },
  "klow": {
-  "80 mg": 117.99
+  "80 mg": 120
  },
  "epitalon": {
   "50 mg": 110

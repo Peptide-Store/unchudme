@@ -62,6 +62,7 @@ const OVERRIDES = {
   "mots-c": { "40 mg": 140 },   // set by hand 2026-10-20, level with Rebirth Labs ($139.99)
   "cjc-ipa": { "CJC 10 mg + Ipa 10 mg": 75 },   // set by hand 2026-10-20
   epitalon: { "50 mg": 110 },   // set by hand 2026-10-20
+  klow: { "80 mg": 120 },   // set by hand 2026-10-20
   "glp1-r": { "5 mg": 54.99, "10 mg": 72.99, "20 mg": 129.99, "30 mg": 164.99, "40 mg": 199.99, "60 mg": 269.99 },
 };
 const prices = {}; const rows = [];
