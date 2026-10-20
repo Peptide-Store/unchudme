@@ -248,7 +248,7 @@ document.addEventListener("click", (e) => {
 const pages = {
   home() {
     if (saleOff()) $("main").insertAdjacentHTML("afterbegin", `<a class="sale-banner" href="shop.html"><span class="sale-pct">${saleOff()}% OFF</span>
-      <span class="sale-copy"><b>Founders ${saleOff()}% Off Sale.</b> Every vial site-wide is ${saleOff()}% off, no code needed. Prices are already reduced.</span><span class="sale-cta">Shop the sale →</span></a>`);
+      <span class="sale-copy"><b>Founders ${saleOff()}% Off Sale.</b> Every vial site-wide is ${saleOff()}% off, no code needed.</span><span class="sale-cta">Shop the sale →</span></a>`);
     const onShelf = Object.keys(STOCK).map(byId).filter((p) => p && inStock(p));
     $("#featured").innerHTML = [...onShelf, ...PRODUCTS.filter((p) => !onShelf.includes(p))].slice(0, 8).map(productCard).join("");
     const l = LOTS.find((x) => x.productId === "bpc-157" && !x.sample) ?? LOTS.find((x) => x.productId === "bpc-157"), p = byId(l.productId);
