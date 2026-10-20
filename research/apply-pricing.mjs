@@ -59,6 +59,7 @@ const round = (n) => Math.round(n) - 0.01;   // $88.4 → $87.99, $88.6 → $88.
 const OVERRIDES = {
   tesamorelin: { "10 mg": 79.99 },
   "bac-water": { "3 ml": 5 },   // no competitor data; set 2026-10-17
+  "mots-c": { "40 mg": 140 },   // set by hand 2026-10-20, level with Rebirth Labs ($139.99)
   "glp1-r": { "5 mg": 54.99, "10 mg": 72.99, "20 mg": 129.99, "30 mg": 164.99, "40 mg": 199.99, "60 mg": 269.99 },
 };
 const prices = {}; const rows = [];

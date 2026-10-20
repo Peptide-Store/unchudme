@@ -4,6 +4,10 @@ What changed on the Aura Pharma storefront and why. Newest first. The certificat
 
 > Public repo: no supplier names, supplier batches, lab task numbers or verification keys here.
 
+## 2026-10-20 — MOTS-c 40 mg at $140
+
+- MOTS-c 40 mg set by hand to $140.00 (was $141.99, the competitor average), level with Rebirth Labs at $139.99. Override in `research/apply-pricing.mjs`.
+
 ## 2026-10-20 — Password gate on the whole site
 
 - **`middleware.js`** (Vercel Routing Middleware) runs before every page and file. Without the password, visitors get a branded Aura Pharma password page; the right password sets a 30-day HttpOnly cookie and sends them on to the page they asked for.
