@@ -4,6 +4,12 @@ What changed on the Aura Pharma storefront and why. Newest first. The certificat
 
 > Public repo: no supplier names, supplier batches, lab task numbers or verification keys here.
 
+## 2026-10-20 — Password gate on the whole site
+
+- **`middleware.js`** (Vercel Routing Middleware) runs before every page and file. Without the password, visitors get a branded Aura Pharma password page; the right password sets a 30-day HttpOnly cookie and sends them on to the page they asked for.
+- The password lives only in the Vercel environment variable **`SITE_PASSWORD`** (Production). The repo is public, so it is never in git. Changing it signs everyone out. If it is missing, the site shows "The site is not open yet" rather than opening.
+- `/api/crypto-webhook` stays open so NOWPayments can still confirm payments. Everything else, including `/media/`, is behind the gate, so link previews no longer show the site.
+
 ## 2026-10-17 — Orders tab on the account page
 
 - **Account → Orders** (`account.html?tab=orders`, linked from the order page's "Your orders"): in-progress and past orders with a Placed → Paid → Shipped tracker, items with vial thumbnails, tracking linked to the carrier, Track package, Pay now (unpaid crypto), Buy again and View order. Replaces the short order list under the profile.
