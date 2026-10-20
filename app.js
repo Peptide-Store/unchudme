@@ -245,10 +245,15 @@ document.addEventListener("click", (e) => {
 });
 
 /* ---------- pages ---------- */
+// Founders sale banner at the top of the home and shop pages; the home one links through to the shop.
+function saleBanner(link) {
+  if (!saleOff()) return;
+  const inner = `<span class="sale-pct">${saleOff()}% OFF</span><span class="sale-copy"><b>Founders ${saleOff()}% Off Sale.</b> Every vial site-wide is ${saleOff()}% off, no code needed.</span>`;
+  $("main").insertAdjacentHTML("afterbegin", link ? `<a class="sale-banner" href="shop.html">${inner}<span class="sale-cta">Shop the sale →</span></a>` : `<div class="sale-banner">${inner}</div>`);
+}
 const pages = {
   home() {
-    if (saleOff()) $("main").insertAdjacentHTML("afterbegin", `<a class="sale-banner" href="shop.html"><span class="sale-pct">${saleOff()}% OFF</span>
-      <span class="sale-copy"><b>Founders ${saleOff()}% Off Sale.</b> Every vial site-wide is ${saleOff()}% off, no code needed.</span><span class="sale-cta">Shop the sale →</span></a>`);
+    saleBanner(true);
     const onShelf = Object.keys(STOCK).map(byId).filter((p) => p && inStock(p));
     $("#featured").innerHTML = [...onShelf, ...PRODUCTS.filter((p) => !onShelf.includes(p))].slice(0, 8).map(productCard).join("");
     const l = LOTS.find((x) => x.productId === "bpc-157" && !x.sample) ?? LOTS.find((x) => x.productId === "bpc-157"), p = byId(l.productId);
@@ -261,6 +266,7 @@ const pages = {
   },
 
   shop() {
+    saleBanner(false);
     const params = new URLSearchParams(location.search);
     let cat = params.get("cat") || "all", q = "", sort = "name";
     $("#chips").innerHTML = [{ id: "all", label: "All" }, { id: "instock", label: "In stock" }, ...CATEGORIES].map((c) =>
