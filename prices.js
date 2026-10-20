@@ -39,7 +39,7 @@ const PRICES = {
   "BPC 10 mg + TB 10 mg": 95.99
  },
  "cjc-ipa": {
-  "CJC 10 mg + Ipa 10 mg": 99.99
+  "CJC 10 mg + Ipa 10 mg": 75
  },
  "klow": {
   "80 mg": 117.99

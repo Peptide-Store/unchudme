@@ -4,9 +4,10 @@ What changed on the Aura Pharma storefront and why. Newest first. The certificat
 
 > Public repo: no supplier names, supplier batches, lab task numbers or verification keys here.
 
-## 2026-10-20 — MOTS-c 40 mg at $140
+## 2026-10-20 — MOTS-c 40 mg at $140, CJC-1295 + Ipamorelin at $75
 
 - MOTS-c 40 mg set by hand to $140.00 (was $141.99, the competitor average), level with Rebirth Labs at $139.99. Override in `research/apply-pricing.mjs`.
+- CJC-1295 + Ipamorelin 10 + 10 mg set by hand to $75.00 (was $99.99).
 
 ## 2026-10-20 — Password gate on the whole site
 
