@@ -420,3 +420,17 @@ main.portal + footer.site, .portal ~ footer.site { margin-top: 0; }
 .co-or { display: flex; align-items: center; gap: 12px; margin: 20px 0 16px; color: var(--muted); font-size: .85rem; }
 .co-or::before, .co-or::after { content: ""; flex: 1; height: 1px; background: var(--line); }
 .co-guest { width: 100%; justify-content: center; }
+
+/* Site-wide sale: struck list price, sale price, and the landing-page banner */
+.was { color: var(--muted); font-weight: 450; text-decoration-thickness: 1.5px; margin-right: 2px; }
+.sale-pair { display: inline-flex; align-items: baseline; gap: 8px; }
+.card .price .was { font-size: .82em; }
+.now { color: #c2410c; }
+.sale-chip { display: inline-block; vertical-align: middle; margin-left: 8px; padding: 3px 9px; border-radius: 999px; background: #c2410c; color: #fff; font: 700 .72rem/1.2 var(--sans); letter-spacing: .06em; }
+.sale-banner { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; padding: 14px 16px; text-decoration: none;
+  background: linear-gradient(90deg, #9a3412, #c2410c 50%, #9a3412); color: #fff; text-align: center; }
+.sale-pct { font: 800 1.35rem/1 var(--sans); letter-spacing: .04em; padding: 6px 12px; border: 2px solid rgba(255,255,255,.85); border-radius: 10px; }
+.sale-copy { font-size: .98rem; }
+.sale-cta { font-weight: 650; text-decoration: underline; text-underline-offset: 3px; }
+.sale-banner:hover .sale-cta { text-decoration-thickness: 2px; }
+@media (max-width: 640px) { .sale-banner { gap: 8px 12px; } .sale-pct { font-size: 1.1rem; } .sale-copy { font-size: .88rem; } }

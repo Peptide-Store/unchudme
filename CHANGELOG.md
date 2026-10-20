@@ -4,6 +4,12 @@ What changed on the Aura Pharma storefront and why. Newest first. The certificat
 
 > Public repo: no supplier names, supplier batches, lab task numbers or verification keys here.
 
+## 2026-10-20 — Founders 50% Off Sale
+
+- **Site-wide 50% off.** `SALE` in `research/apply-pricing.mjs` (0.5 now; set 0 to end it) is written into `prices.js`. Each size keeps its list price as `was`, and `price` becomes the sale price, so the cart, checkout and `catalog_prices` all charge the sale price. Re-run `node tools/checkout/sync-prices.mjs` after changing it.
+- Prices show the list price struck through next to the sale price on cards, product pages (with a "Founders 50% off" chip) and in the cart.
+- **Landing page banner:** "50% OFF · Founders 50% Off Sale. Every vial site-wide is 50% off, no code needed." Links to the shop. It disappears when `SALE` is 0.
+
 ## 2026-10-20 — Hand-set prices across the catalog
 
 - MOTS-c 40 mg set by hand to $140.00 (was $141.99, the competitor average), level with Rebirth Labs at $139.99. Override in `research/apply-pricing.mjs`.

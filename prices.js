@@ -54,4 +54,6 @@ const PRICES = {
   "3 ml": 5
  }
 };
-PRODUCTS.forEach((p) => p.sizes.forEach((s) => { const v = PRICES[p.id]?.[s.label]; if (v != null) s.price = v; }));
+const SALE = { off: 0.5 };
+PRODUCTS.forEach((p) => p.sizes.forEach((s) => { const v = PRICES[p.id]?.[s.label]; if (v == null) return;
+  if (SALE.off) { s.was = v; s.price = Math.round(v * (1 - SALE.off) * 100) / 100; } else s.price = v; }));

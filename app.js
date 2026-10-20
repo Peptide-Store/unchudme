@@ -7,7 +7,10 @@ const byId = (id) => PRODUCTS.find((p) => p.id === id);
 const catLabel = (id) => CATEGORIES.find((c) => c.id === id)?.label ?? id;
 const priced = (p) => p.sizes.filter((s) => s.price != null);
 const minPrice = (p) => (priced(p).length ? Math.min(...priced(p).map((s) => s.price)) : Infinity);
-const priceTag = (p) => (priced(p).length ? money(minPrice(p)) : "Price on request");
+// On sale, a price shows the list price struck through before the sale price.
+const saleMoney = (s) => (s.was != null ? `<span class="sale-pair"><s class="was">${money(s.was)}</s> <span class="now">${money(s.price)}</span></span>` : money(s.price));
+const priceTag = (p) => (priced(p).length ? saleMoney(priced(p).find((s) => s.price === minPrice(p))) : "Price on request");
+const saleOff = () => (typeof SALE !== "undefined" && SALE.off ? Math.round(SALE.off * 100) : 0);
 // Availability from stock.js: on hand, sold out and on reorder, or ordered from the wholesaler on demand
 const onHand = (p, s) => STOCK[p.id]?.[s.label];
 const availability = (n) => (n > 0 ? { cls: "in", text: "In stock" }
@@ -167,7 +170,7 @@ function renderCart() {
     const n = onHand(p, s) ?? 0, note = n >= i.qty ? "" : n > 0 ? `${n} in stock, ${i.qty - n} ships in ${LEAD_TIME}` : `Ships in ${LEAD_TIME}`;
     return `<div class="item"><div><b>${esc(p.name)}</b> <span class="muted mono">${esc(sizeText(i.label))} × ${i.qty}</span><br>
       ${note ? `<span class="cart-note">${note}</span><br>` : ""}
-      <button class="link-btn" data-rm="${idx}">Remove</button></div><div class="mono">${money(price * i.qty)}</div></div>`;
+      <button class="link-btn" data-rm="${idx}">Remove</button></div><div class="mono">${s.was != null ? `<s class="was">${money(s.was * i.qty)}</s><br>` : ""}${money(price * i.qty)}</div></div>`;
   }).join("") : `<p class="muted" style="padding:20px 0">Your cart is empty.</p>`;
   $("#cart-sub").textContent = money(sub);
   $(".cart-checkout").classList.toggle("is-disabled", !c.length);
@@ -244,6 +247,8 @@ document.addEventListener("click", (e) => {
 /* ---------- pages ---------- */
 const pages = {
   home() {
+    if (saleOff()) $("main").insertAdjacentHTML("afterbegin", `<a class="sale-banner" href="shop.html"><span class="sale-pct">${saleOff()}% OFF</span>
+      <span class="sale-copy"><b>Founders ${saleOff()}% Off Sale.</b> Every vial site-wide is ${saleOff()}% off, no code needed. Prices are already reduced.</span><span class="sale-cta">Shop the sale →</span></a>`);
     const onShelf = Object.keys(STOCK).map(byId).filter((p) => p && inStock(p));
     $("#featured").innerHTML = [...onShelf, ...PRODUCTS.filter((p) => !onShelf.includes(p))].slice(0, 8).map(productCard).join("");
     const l = LOTS.find((x) => x.productId === "bpc-157" && !x.sample) ?? LOTS.find((x) => x.productId === "bpc-157"), p = byId(l.productId);
@@ -335,7 +340,7 @@ const pages = {
         `<button class="thumb cert" data-v="cert" aria-pressed="${view === "cert"}" aria-label="Certificate of analysis ${esc(cert.certNo)}"><img src="${cert.img}" alt=""></button>`].join("") : "";
       document.querySelectorAll("#pdp-thumbs .thumb").forEach((b) => (b.onclick = () => { view = b.dataset.v; setGallery(); }));
     };
-    const setPrice = () => { setAvail(); setReport(); setGallery(); $("#price").textContent = size.price == null ? "Price on request" : money(size.price); $("#add").disabled = size.price == null; };
+    const setPrice = () => { setAvail(); setReport(); setGallery(); $("#price").innerHTML = size.price == null ? "Price on request" : saleMoney(size) + (size.was != null ? ` <span class="sale-chip">Founders ${saleOff()}% off</span>` : ""); $("#add").disabled = size.price == null; };
     setPrice();
     document.querySelectorAll(".size").forEach((b) => (b.onclick = () => {
       size = p.sizes[+b.dataset.i];
