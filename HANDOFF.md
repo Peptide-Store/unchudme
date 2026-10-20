@@ -42,7 +42,7 @@ Aura Pharma: a static storefront for research-use-only peptides. No build step; 
 
 Header: logo · Shop · FAQ · Affiliates · **profile icon** (opens the account page) · cart. On phones: logo mark, profile, cart and menu icons. A research-use strip sits above the header and an entry gate asks visitors to confirm research use.
 
-**Password gate:** the whole site sits behind a password (`middleware.js`, checked on Vercel before anything is served). The password is the Vercel env var `SITE_PASSWORD`, never in git; change it in Vercel → Project → Settings → Environment Variables, then redeploy. `/api/crypto-webhook` stays open for NOWPayments.
+**Password gate:** the whole site sits behind a password (`middleware.js`, checked on Vercel before anything is served). Temporary until launch. The password is the `PASSWORD` constant in `middleware.js` (a Vercel env var `SITE_PASSWORD` overrides it); delete `middleware.js` to open the site. `/api/crypto-webhook` stays open for NOWPayments.
 
 **Motion rules (Jack's call):** the stars drift slowly in one direction; nothing follows the mouse (stars, planet and vials all ignore the pointer). Reduced-motion users get a still sky.
 

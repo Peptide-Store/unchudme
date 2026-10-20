@@ -1,9 +1,10 @@
 // Password gate for the whole site, run by Vercel before any page or file is served.
-// The repo is public, so the password lives only in the Vercel environment variable SITE_PASSWORD.
-// A correct password sets an HttpOnly cookie holding an HMAC of the password: changing SITE_PASSWORD
+// Temporary pre-launch gate. The password is PASSWORD below; a Vercel env var SITE_PASSWORD overrides it.
+// A correct password sets an HttpOnly cookie holding an HMAC of the password: changing the password
 // signs everyone out. The NOWPayments webhook stays open so crypto payments still confirm.
 export const config = { matcher: '/((?!api/crypto-webhook).*)' };
 
+const PASSWORD = 'aura123';
 const COOKIE = 'aura_gate';
 const MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 const enc = new TextEncoder();
@@ -25,9 +26,7 @@ const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>
 
 export default async function middleware(request) {
   const url = new URL(request.url);
-  const secret = process.env.SITE_PASSWORD;
-  if (!secret) return gate('/', 'The site is not open yet.', 503); // fail closed until the password is set
-
+  const secret = process.env.SITE_PASSWORD || PASSWORD;
   const expected = await token(secret);
   if (url.pathname === '/__unlock' && request.method === 'POST') {
     const form = await request.formData();
