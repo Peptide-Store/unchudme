@@ -4,7 +4,7 @@
 // signs everyone out. The NOWPayments webhook stays open so crypto payments still confirm.
 export const config = { matcher: '/((?!api/crypto-webhook).*)' };
 
-const PASSWORD = 'aura123';
+const PASSWORD = 'aurafarm';
 const COOKIE = 'aura_gate';
 const MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 const enc = new TextEncoder();
