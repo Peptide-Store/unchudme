@@ -57,7 +57,7 @@ const round = (n) => Math.round(n) - 0.01;   // $88.4 → $87.99, $88.6 → $88.
 // GLP1-R (2026-10-15): a per-mg ladder matched to Mile High / Rebirth at 5 mg ($54.99) and just under the market above
 // that; the averages had put 5 mg above 10 mg and copied one outlier for 60 mg.
 const OVERRIDES = {
-  tesamorelin: { "10 mg": 79.99 },
+  tesamorelin: { "10 mg": 80 },   // set by hand 2026-10-20 (was 79.99)
   "bac-water": { "3 ml": 5 },   // no competitor data; set 2026-10-17
   "mots-c": { "40 mg": 140 },   // set by hand 2026-10-20, level with Rebirth Labs ($139.99)
   "cjc-ipa": { "CJC 10 mg + Ipa 10 mg": 75 },   // set by hand 2026-10-20

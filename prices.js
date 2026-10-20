@@ -7,7 +7,7 @@ const PRICES = {
   "10 mg": 62.99
  },
  "tesamorelin": {
-  "10 mg": 79.99
+  "10 mg": 80
  },
  "ipamorelin": {
   "10 mg": 59.99
