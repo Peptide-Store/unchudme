@@ -64,7 +64,17 @@ const OVERRIDES = {
   epitalon: { "50 mg": 110 },   // set by hand 2026-10-20
   klow: { "80 mg": 120 },   // set by hand 2026-10-20
   "ss-31": { "10 mg": 60 },   // set by hand 2026-10-20
-  "glp1-r": { "5 mg": 54.99, "10 mg": 72.99, "20 mg": 129.99, "30 mg": 164.99, "40 mg": 199.99, "60 mg": 269.99 },
+  // set by hand 2026-10-20 after a sweep of Rebirth Labs, Mile High Compounds and Crush Research
+  "glp1-t": { "10 mg": 70 },
+  ipamorelin: { "10 mg": 75 },
+  "bpc-157": { "10 mg": 50 },
+  "tb-500": { "10 mg": 60 },
+  adamax: { "10 mg": 70 },
+  "melanotan-2": { "10 mg": 45 },
+  "ghk-cu": { "50 mg": 45, "100 mg": 75 },
+  "bpc-tb": { "BPC 10 mg + TB 10 mg": 110 },
+  nad: { "500 mg": 80 },
+  "glp1-r": { "5 mg": 54.99, "10 mg": 80, "20 mg": 129.99, "30 mg": 164.99, "40 mg": 199.99, "60 mg": 269.99 },
 };
 const prices = {}; const rows = [];
 for (const p of PRODUCTS) for (const s of p.sizes) {

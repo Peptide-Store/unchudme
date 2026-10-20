@@ -4,7 +4,7 @@ What changed on the Aura Pharma storefront and why. Newest first. The certificat
 
 > Public repo: no supplier names, supplier batches, lab task numbers or verification keys here.
 
-## 2026-10-20 — MOTS-c 40 mg at $140, CJC-1295 + Ipamorelin at $75, Epitalon 50 mg at $110, KLOW at $120, SS-31 at $60, Tesamorelin at $80
+## 2026-10-20 — Hand-set prices across the catalog
 
 - MOTS-c 40 mg set by hand to $140.00 (was $141.99, the competitor average), level with Rebirth Labs at $139.99. Override in `research/apply-pricing.mjs`.
 - CJC-1295 + Ipamorelin 10 + 10 mg set by hand to $75.00 (was $99.99).
@@ -12,6 +12,7 @@ What changed on the Aura Pharma storefront and why. Newest first. The certificat
 - KLOW 80 mg set by hand to $120.00 (was $117.99).
 - SS-31 10 mg set by hand to $60.00 (was $59.99).
 - Tesamorelin 10 mg set by hand to $80.00 (was $79.99).
+- After a price sweep of Rebirth Labs, Mile High Compounds and Crush Research, set by hand: GLP1-R 10 mg $80 (was $72.99), GLP1-T 10 mg $70 (was $62.99), Ipamorelin 10 mg $75 (was $59.99), BPC-157 10 mg $50 (was $48.99), TB-500 10 mg $60 (was $62.99), Adamax 10 mg $70 (was $68.99), Melanotan II 10 mg $45 (was $42.99), GHK-Cu 50 mg $45 (was $40.99), GHK-Cu 100 mg $75 (was $53.99), BPC-157 + TB-500 10 + 10 mg $110 (was $95.99), NAD+ 500 mg $80 (was $75.99). BAC water stays $5.
 
 ## 2026-10-20 — Password gate on the whole site
 
