@@ -33,7 +33,7 @@ Aura Pharma: a static storefront for research-use-only peptides. No build step; 
 | Home | `index.html` | (logo) | classical theme (`renaissance.css`, `js/renaissance.js`): marble statue holding a moving painted flame (`js/fire.js`, `media/renaissance/fire-layer.png`), drifting ash (`js/ash.js`), the sale banner at the top, best sellers, "Independent lab reports" and "For research use only" tiles |
 | Shop | `shop.html` | Shop | catalog grid with search, categories, sort; classical theme over drifting ash |
 | Product | `product.html?id=…` | — | vial / certificate **gallery** (scrolls with the page, not sticky), price, stock, sizes, Specifications (under the buy box), lab report panel for the **selected size** with "Download certificate" |
-| FAQ | `faq.html` | FAQ | |
+| FAQ | `faq.html` | FAQ | classical theme over drifting ash |
 | Account | `account.html` | profile icon | sign in / create account / reset password / profile with verification badge and order list (Supabase; see ACCOUNTS.md) |
 | Checkout | `checkout.html` | cart → Checkout | accounts or guests; US address, pay by invoice or crypto, order status at `?order=AO-…` (see CHECKOUT.md) |
 | Affiliate portal | `affiliate.html` | Affiliates | sign-in card (username/email, password with show/hide) over drifting ash, classical theme. **Not connected:** signing in says the portal isn't open yet |

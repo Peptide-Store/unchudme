@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,13 +16,15 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://unchudme.vercel.app/media/og-image.jpg?v=5">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;750&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;750&family=IBM+Plex+Mono:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="renaissance.css">
 </head>
-<body data-page="faq">
+<body data-page="faq" class="ar">
+<canvas class="ar-ash ar-ash-page" aria-hidden="true"></canvas>
 <main><section><div class="wrap" style="max-width:820px">
   <div class="eyebrow">FAQ</div>
-  <h1 style="font-size:2.4rem">Questions</h1>
+  <h1 class="ar-shop-h1">Questions</h1>
   <details open><summary>Who can buy?</summary><p class="muted">Laboratories, institutions and qualified researchers aged 21 or over. Accounts are reviewed for research affiliation before the first order ships.</p></details>
   <details><summary>Can these products be used in people or animals?</summary><p class="muted">No. All products are for in vitro laboratory research only. We do not provide dosing, administration or usage guidance, and we cancel orders where we have reason to believe products are intended for human or animal use.</p></details>
   <details><summary>Where do I find the certificate for my vial?</summary><p class="muted">A printed copy of the lab report comes with your order. The same report is on each product page, and all of them are listed on the <a href="coa.html">Certificates</a> page. Each report carries an Aura Pharma batch ID (e.g. AP-0001); quote it to request the full testing details.</p></details>
@@ -32,5 +34,7 @@
 <script src="prices.js"></script>
 <script src="stock.js"></script>
 <script src="app.js"></script>
+<script src="js/renaissance.js"></script>
+<script src="js/ash.js"></script>
 </body>
 </html>

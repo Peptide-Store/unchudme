@@ -89,7 +89,7 @@
 .ar-folio h3 { font: 500 1.6rem/1.15 var(--ar-serif); text-transform: uppercase; letter-spacing: .06em; color: var(--ar-gold-hi); margin: 0 0 12px; }
 .ar-folio p { font: 500 1.2rem/1.5 var(--ar-serif); color: #d8cfbf; margin: 0 0 12px; }
 .ar-folio a { color: var(--ar-gold-hi); }
-.ar-folio .mini-coa { margin-top: 18px; background: #0b0d11; border: 1px solid rgba(212,175,106,.3); color: var(--ar-cream);
+.ar-folio .mini-coa { margin-top: 18px; transform: none; background: #0b0d11; border: 1px solid rgba(212,175,106,.3); color: var(--ar-cream);
   --muted: #a59d8e; --line: rgba(212,175,106,.18); box-shadow: 0 14px 30px rgba(0,0,0,.45); }
 .ar-folio .mini-coa .mono { color: var(--ar-cream); }
 .ar-folio .mini-coa .pass { color: #9fd18b; }
@@ -118,6 +118,14 @@
 .ar .portal-login { background: linear-gradient(180deg, #e9cf95, #cfa962); border-color: #cfa962; color: #1b150b; box-shadow: 0 8px 24px rgba(0,0,0,.4);
   font: 700 .9rem var(--ar-serif); letter-spacing: .2em; text-transform: uppercase; }
 .ar .portal-login:hover { background: linear-gradient(180deg, #f1dcaa, #d4af6a); }
+
+/* FAQ: the questions as dark gold-edged panels */
+.ar details { background: rgba(17,20,26,.88); border-color: rgba(212,175,106,.24); border-radius: 12px; padding: 18px 22px; }
+.ar details[open] { border-color: rgba(212,175,106,.45); }
+.ar summary { font: 600 1.25rem var(--ar-serif); letter-spacing: .02em; color: var(--ar-cream); }
+.ar summary::marker { color: var(--ar-gold); }
+.ar details p { font: 500 1.12rem/1.55 var(--ar-serif); color: #d8cfbf; margin: 12px 0 2px; }
+.ar details a { color: var(--ar-gold-hi); }
 
 @media (max-width: 1100px) {
   .ar nav.main { gap: 22px; }
