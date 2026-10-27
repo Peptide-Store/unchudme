@@ -5,6 +5,8 @@
 export const config = { matcher: '/((?!api/crypto-webhook).*)' };
 
 const PASSWORD = 'aurafarm';
+// served without the password: the logo the gate page itself shows
+const PUBLIC = new Set(['/media/renaissance/logo-mark.png']);
 const COOKIE = 'aura_gate';
 const MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 const enc = new TextEncoder();
@@ -43,7 +45,7 @@ export default async function middleware(request) {
     }
     return gate(next, 'That password is not right.', 401);
   }
-  if (same(readCookie(request), expected)) return new Response(null, { headers: { 'x-middleware-next': '1' } });
+  if (same(readCookie(request), expected) || PUBLIC.has(url.pathname)) return new Response(null, { headers: { 'x-middleware-next': '1' } });
   return gate(safeNext(url.pathname + url.search), '', 401);
 }
 
@@ -52,41 +54,45 @@ function gate(next, error, status) {
 <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow">
 <title>Aura Pharma</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
-body{font-family:"Inter",system-ui,-apple-system,sans-serif;color:#eceae4;background:#0f1215;display:grid;place-items:center;padding:16px;overflow:hidden;position:relative}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.8;background:
-radial-gradient(1px 1px at 12% 18%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 27% 72%,#cfeaff 50%,transparent 51%),
-radial-gradient(1.5px 1.5px at 44% 34%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 63% 12%,#a9dcff 50%,transparent 51%),
-radial-gradient(1px 1px at 78% 58%,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 88% 26%,#cfeaff 50%,transparent 51%),
-radial-gradient(1px 1px at 8% 64%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 55% 86%,#a9dcff 50%,transparent 51%),
-radial-gradient(1px 1px at 35% 8%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 93% 82%,#fff 50%,transparent 51%),
-radial-gradient(1px 1px at 70% 40%,#cfeaff 50%,transparent 51%),radial-gradient(1px 1px at 19% 44%,#fff 50%,transparent 51%)}
-body:after{content:"";position:fixed;left:-20%;right:-20%;bottom:-62vh;height:80vh;border-radius:50%;pointer-events:none;
-background:radial-gradient(ellipse at 50% 0%,#172330 0%,#0b0e11 60%);box-shadow:0 -2px 30px rgba(140,200,240,.35),inset 0 2px 0 rgba(230,245,255,.35)}
-main{position:relative;z-index:1;width:100%;max-width:360px;text-align:center}
-.mark{display:block;margin:0 auto 14px}
-.wm b{display:block;font-weight:500;font-size:1.6rem;letter-spacing:.3em;margin-right:-.3em}
-.wm small{display:block;font-weight:500;font-size:.68rem;letter-spacing:.6em;margin:7px -.6em 0 0;color:#8cc8f0}
-p{color:#9aa2ad;font-size:.95rem;margin:28px 0 18px}
-form{display:grid;gap:10px}
-input{width:100%;font:inherit;font-size:1rem;color:#eceae4;background:#171b20;border:1px solid #2a3038;border-radius:12px;padding:13px 14px;outline:none}
-input:focus{border-color:#8cc8f0;box-shadow:0 0 0 3px rgba(140,200,240,.18)}
-button{font:inherit;font-weight:600;font-size:1rem;color:#0f1215;background:#8cc8f0;border:0;border-radius:12px;padding:13px 14px;cursor:pointer}
+body{font-family:"Cormorant Garamond",Georgia,serif;color:#efe6d4;display:grid;place-items:center;padding:16px;overflow:hidden;position:relative;
+background:radial-gradient(70% 55% at 50% 100%,rgba(255,140,50,.12),transparent 70%),radial-gradient(900px 700px at 50% 30%,#1a1f29,transparent 70%),#0f1218}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+main{position:relative;z-index:1;width:100%;max-width:380px;text-align:center}
+.mark{display:block;margin:0 auto 18px;height:92px;filter:drop-shadow(0 0 14px rgba(255,170,60,.35))}
+.wm b{display:block;font-weight:500;font-size:2.4rem;line-height:1;letter-spacing:.32em;margin-right:-.32em}
+.wm small{display:block;font-weight:600;font-size:.82rem;letter-spacing:.72em;margin:10px -.72em 0 0;color:#d4af6a}
+p{color:#c9bfae;font-size:1.2rem;margin:30px 0 20px}
+form{display:grid;gap:12px}
+input{width:100%;font:500 1.1rem "Cormorant Garamond",Georgia,serif;letter-spacing:.04em;color:#efe6d4;background:rgba(13,15,20,.85);border:1px solid rgba(212,175,106,.3);border-radius:999px;padding:14px 22px;outline:none}
+input::placeholder{color:#8f8676}
+input:focus{border-color:#d4af6a;box-shadow:0 0 0 3px rgba(212,175,106,.18)}
+button{font:700 .95rem "Cormorant Garamond",Georgia,serif;letter-spacing:.24em;text-transform:uppercase;color:#1b150b;background:linear-gradient(180deg,#e9cf95,#cfa962);border:0;border-radius:999px;padding:15px 14px;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.45)}
 button:hover{filter:brightness(1.08)}
-.err{color:#f0b36b;font-size:.88rem;margin:2px 0 0}
-</style></head><body><main>
-<svg class="mark" width="72" height="72" viewBox="0 0 48 48" fill="none" aria-hidden="true"><defs> <clipPath id="mk0c"><rect width="48" height="48" rx="11"/></clipPath> <mask id="mk0m" maskUnits="userSpaceOnUse" x="-8" y="-8" width="64" height="64"><rect x="-8" y="-8" width="64" height="64" fill="#fff"/><path d="M-8 41Q24 23 56 41V56H-8Z" fill="#000"/></mask> <linearGradient id="mk0a" x1="0" y1="6" x2="0" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2b3947"/><stop offset="1" stop-color="#06090d"/></linearGradient> <linearGradient id="mk0e" x1="0" y1="5" x2="0" y2="36" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#a9dcff"/><stop offset="1" stop-color="#5aa9e6" stop-opacity=".25"/></linearGradient> <linearGradient id="mk0r" x1="-8" y1="0" x2="56" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5aa9e6" stop-opacity="0"/><stop offset=".5" stop-color="#e6f5ff"/><stop offset="1" stop-color="#5aa9e6" stop-opacity="0"/></linearGradient> <linearGradient id="mk0b" x1="0" y1="-2" x2="0" y2="7" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a9dcff" stop-opacity="0"/><stop offset="1" stop-color="#fff"/></linearGradient> <radialGradient id="mk0h" cx="24" cy="31" r="22" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7cc4ff" stop-opacity=".35"/><stop offset="1" stop-color="#7cc4ff" stop-opacity="0"/></radialGradient> <filter id="mk0g" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.1"/></filter></defs> <g><g mask="url(#mk0m)"><rect x="-8" y="-8" width="64" height="64" fill="url(#mk0h)"/> <path d="M24 -2V7" stroke="url(#mk0b)" stroke-width="2.2" filter="url(#mk0g)"/><path d="M24 -2V7" stroke="url(#mk0b)" stroke-width=".7"/> <path d="M24 4.5L37.5 40H30.5L24 21.5L17.5 40H10.5Z" fill="url(#mk0a)"/> <path d="M10.5 40L24 4.5L37.5 40" stroke="url(#mk0e)" stroke-width="1.8" filter="url(#mk0g)"/><path d="M10.5 40L24 4.5L37.5 40" stroke="url(#mk0e)" stroke-width=".75"/> <path d="M17.5 40L24 21.5L30.5 40" stroke="#9fd4ff" stroke-opacity=".35" stroke-width=".5"/></g> <path d="M-8 41Q24 23 56 41" stroke="url(#mk0r)" stroke-width="2.4" filter="url(#mk0g)"/><path d="M-8 41Q24 23 56 41" stroke="url(#mk0r)" stroke-width=".7"/> <circle cx="24" cy="30.3" r="2.6" fill="#bfe6ff" opacity=".55" filter="url(#mk0g)"/> <path d="M19.5 30.3H28.5" stroke="#cfeaff" stroke-width=".35" opacity=".7"/><path d="M24 27.2L24.45 29.85L27.1 30.3L24.45 30.75L24 33.4L23.55 30.75L20.9 30.3L23.55 29.85Z" fill="#fff"/></g></svg>
-<div class="wm" aria-label="Aura Pharma"><b>ΛURΛ</b><small>PHARMA</small></div>
+.err{color:#f0b36b;font-size:1.05rem;margin:4px 0 0}
+</style></head><body><canvas aria-hidden="true"></canvas><main>
+<img class="mark" src="/media/renaissance/logo-mark.png" alt="">
+<div class="wm" aria-label="Aura Pharma"><b>AURA</b><small>PHARMA</small></div>
 <p>This site is private. Enter the password to continue.</p>
 <form method="post" action="/__unlock">
 <input type="hidden" name="next" value="${esc(next)}">
 <input type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="current-password" required autofocus>
 <button type="submit">Enter</button>
 ${error ? `<div class="err" role="alert">${esc(error)}</div>` : ''}
-</form></main></body></html>`;
+</form></main>
+<script>
+(function(){var c=document.querySelector("canvas"),x=c.getContext("2d"),still=matchMedia("(prefers-reduced-motion: reduce)").matches,w,h,d,f=[],s=11,
+r=function(){return((s=s*16807%2147483647)-1)/2147483646};
+function lay(){d=Math.min(devicePixelRatio||1,2);w=c.clientWidth;h=c.clientHeight;c.width=w*d;c.height=h*d;s=11;f=[];
+for(var i=0,n=Math.round(w*h/7000);i<n;i++){var z=r();f.push({x:r()*w,y:r()*h,s:.6+z*z*2.4,a:.18+z*.45,vy:5+z*14,vx:2+z*5,sw:4+r()*10,fq:.2+r()*.5,p:r()*6.28,sp:(r()-.5)*1.2,e:r()<.1})}}
+function draw(t){x.setTransform(d,0,0,d,0,0);x.clearRect(0,0,w,h);f.forEach(function(p){var X=(p.x+t*p.vx+Math.sin(t*p.fq+p.p)*p.sw)%w,Y=(p.y-t*p.vy)%h;if(X<0)X+=w;if(Y<0)Y+=h;
+if(p.e){var g=x.createRadialGradient(X,Y,0,X,Y,p.s*3.2),k=.55+.45*Math.sin(t*3+p.p);g.addColorStop(0,"rgba(255,196,120,"+(p.a+.3)*k+")");g.addColorStop(1,"rgba(255,120,40,0)");x.globalAlpha=1;x.fillStyle=g;x.beginPath();x.arc(X,Y,p.s*3.2,0,6.283);x.fill()}
+else{x.save();x.translate(X,Y);x.rotate(p.p+t*p.sp);x.globalAlpha=p.a;x.fillStyle="#b8b0a3";x.beginPath();x.ellipse(0,0,p.s,p.s*.55,0,0,6.283);x.fill();x.restore()}});x.globalAlpha=1}
+lay();addEventListener("resize",lay);var t0=performance.now();(function tick(n){draw((n-t0)/1000);if(!still)requestAnimationFrame(tick)})(t0);})();
+</script></body></html>`;
   return new Response(html, {
     status,
     headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex, nofollow' },
