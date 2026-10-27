@@ -86,9 +86,9 @@ function markSVG(size, attrs = "", { tile = true } = {}) {
 const logoHTML = () => `<a class="logo" href="index.html" aria-label="${esc(BRAND.name)} home">${markSVG(42, 'class="logo-mark"', { tile: false })}<span class="wordmark" aria-hidden="true"><b>ΛURΛ</b><small>PHARMA</small></span></a>`;
 const markLink = (size) => `<a class="logo" href="index.html" aria-label="${esc(BRAND.name)} home">${markSVG(size, 'class="logo-mark"', { tile: false })}</a>`;
 
+// the flame "A" on a dark tile (media/renaissance/favicon.png, apple-touch-icon.png)
 function setFavicon() {
-  const svg = markSVG(48, 'xmlns="http://www.w3.org/2000/svg"');
-  document.head.insertAdjacentHTML("beforeend", `<link rel="icon" href="data:image/svg+xml,${encodeURIComponent(svg)}">`);
+  document.head.insertAdjacentHTML("beforeend", `<link rel="icon" type="image/png" href="media/renaissance/favicon.png?v=${MEDIA_V}"><link rel="apple-touch-icon" href="media/renaissance/apple-touch-icon.png?v=${MEDIA_V}">`);
 }
 
 /* ---------- chrome ---------- */
