@@ -1,0 +1,136 @@
+/* Classical theme for the concept home page (index-renaissance.html).
+   Night sky, marble statue holding a flame, gold serif type. Loaded after styles.css. */
+
+.ar {
+  --ar-night: #0f1218;
+  --ar-deep: #0a0c10;
+  --ar-gold: #d4af6a;
+  --ar-gold-hi: #f1dcaa;
+  --ar-gold-lo: #9c7637;
+  --ar-cream: #efe6d4;
+  --ar-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --bg: var(--ar-deep); --surface: #13161c; --ink: var(--ar-cream); --muted: #a59d8e;
+  --line: #262a31; --accent: var(--ar-gold); --accent-ink: #15110a; --accent-soft: #241d12;
+  background: var(--ar-deep);
+}
+.ar .bg { display: none; }
+
+/* compliance strip: kept, quieter */
+.ar .ruo-strip { background: #07080b; color: #b9ab8e; border-bottom: 1px solid rgba(212,175,106,.18); }
+
+/* on the home page the header floats over the hero, as in the concept, starting just under the strip and the sale
+   banner (js/renaissance.js sets --ar-head-top); on desktop the strip is one fixed-height line */
+.ar .ruo-strip { height: 34px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* (desktop only; on phones the header is sticky, as on every page) */
+@media (min-width: 861px) { .ar[data-page="home"] header.site { position: absolute; top: var(--ar-head-top, 34px); left: 0; right: 0; background: transparent; backdrop-filter: none; border: 0; z-index: 30; } }
+.ar header.site { background: rgba(10,12,16,.6); border-bottom: 1px solid rgba(212,175,106,.16); }
+.ar header.site .wrap { height: 110px; max-width: 1320px; }
+.ar .logo { gap: 14px; }
+.ar .wordmark b { font: 500 2rem/1 var(--ar-serif); letter-spacing: .32em; margin-right: -.32em; color: var(--ar-cream); }
+.ar .wordmark small { font: 500 .78rem/1 var(--ar-serif); letter-spacing: .72em; margin-top: 6px; color: var(--ar-cream); }
+.ar .ar-mark { width: auto; display: block; filter: drop-shadow(0 0 8px rgba(255,170,60,.3)); }
+.ar nav.main { gap: 26px; }
+.ar nav.main a { font: 600 .8rem var(--ar-serif); letter-spacing: .12em; text-transform: uppercase; color: var(--ar-cream); text-shadow: 0 1px 8px rgba(0,0,0,.8); }
+.ar nav.main a:hover { color: var(--ar-gold-hi); }
+.ar .account-btn { color: var(--ar-cream); }
+.ar .cart-btn { background: rgba(10,12,16,.35); border: 1px solid var(--ar-gold); color: var(--ar-cream); padding: 12px 24px;
+  font: 600 .9rem var(--ar-serif); letter-spacing: .16em; text-transform: uppercase; }
+
+/* hero */
+/* hero height follows the art so it spans the right ~64% of the page, as in the concept */
+.ar-hero { position: relative; overflow: hidden; padding: 0; height: clamp(600px, 40.8vw, 960px); display: flex; align-items: center;
+  background: radial-gradient(900px 700px at 62% 30%, #1a1f29, transparent 70%), var(--ar-night); }
+/* the statue sits back: a little smaller than the band, dimmed and hazed so the copy leads and the fire stays bright */
+.ar-art { position: absolute; bottom: 0; right: 2%; height: 86%; aspect-ratio: 1245 / 792;
+  --ar-fade: linear-gradient(90deg, transparent 0, #000 30%), linear-gradient(0deg, transparent 0, #000 12%), linear-gradient(180deg, transparent 0, #000 14%); }
+/* the edge fade sits on the picture and its haze, not the box, so the fire can rise past the top of the art */
+.ar-art-img, .ar-art::after { -webkit-mask-image: var(--ar-fade); mask-image: var(--ar-fade); -webkit-mask-composite: source-in; mask-composite: intersect; }
+.ar-art-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: left top; filter: saturate(.85) contrast(.94); }
+.ar-art::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background: radial-gradient(circle at calc(297 / 1245 * 100%) calc(162 / 792 * 100%), transparent 0 10%, rgba(13,16,22,.18) 16%, rgba(13,16,22,.42) 28%); }
+/* the palm's glow: a canvas over the hand (positions are fractions of the 1245 x 792 art) */
+.ar-flame { z-index: 2; position: absolute; left: calc(150 / 1245 * 100%); top: 0; width: calc(320 / 1245 * 100%); height: calc(290 / 792 * 100%); pointer-events: none; }
+/* the flame (js/fire.js): the painted fire as a light layer, added onto the art. Covers art x 120-480, y 0-320, and
+   carries the art's left-edge fade (alpha = art x / 373) so the glow on the hand fades with the hand */
+.ar-fire { z-index: 2; position: absolute; left: calc(120 / 1245 * 100%); top: 0; width: calc(360 / 1245 * 100%); height: calc(320 / 792 * 100%);
+  pointer-events: none; mix-blend-mode: plus-lighter; filter: saturate(.92);
+  -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.32) 0, #000 70.4%); mask-image: linear-gradient(90deg, rgba(0,0,0,.32) 0, #000 70.4%); }
+@supports not (mix-blend-mode: plus-lighter) { .ar-fire { mix-blend-mode: screen; } }
+.ar-ash { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+.ar-hero-copy { position: relative; z-index: 3; max-width: 1320px; width: 100%; padding-top: 96px; padding-bottom: 30px; }
+
+.ar-kicker { font: 600 .82rem/1.3 var(--ar-serif); letter-spacing: .3em; text-transform: uppercase; color: var(--ar-gold); margin-bottom: 18px; }
+.ar-h1 { font: 500 clamp(2.1rem, 3.1vw, 3.6rem)/1 var(--ar-serif); text-transform: uppercase; letter-spacing: .005em; color: var(--ar-cream);
+  margin: 0 0 18px; text-shadow: 0 4px 30px rgba(0,0,0,.6); }
+.ar-h1 em { font-style: italic; text-transform: none; font-weight: 500; letter-spacing: -.01em; }
+.ar-lead { font: 500 clamp(1.1rem, 1.35vw, 1.35rem)/1.4 var(--ar-serif); color: var(--ar-cream); max-width: 23em; margin: 0 0 28px; text-shadow: 0 2px 16px rgba(0,0,0,.7); }
+.ar-cta { display: inline-flex; align-items: center; gap: 14px; padding: 15px 32px; border-radius: 999px; text-decoration: none;
+  background: linear-gradient(180deg, #e9cf95, #cfa962); color: #1b150b;
+  font: 700 .9rem var(--ar-serif); letter-spacing: .2em; text-transform: uppercase; box-shadow: 0 10px 30px rgba(0,0,0,.45); transition: filter .2s, transform .2s; }
+.ar-cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
+
+
+/* sections below */
+.ar-head { margin-bottom: 30px; }
+.ar-head.ar-row { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; }
+.ar-h2 { font: 500 clamp(2rem, 3.6vw, 3rem)/1.05 var(--ar-serif); text-transform: uppercase; letter-spacing: .02em; color: var(--ar-cream); margin: 0; }
+.ar-h2 em { text-transform: none; font-style: italic; }
+.ar-ghost { display: inline-flex; gap: 10px; padding: 11px 24px; border: 1px solid var(--ar-gold); border-radius: 999px; text-decoration: none;
+  color: var(--ar-gold-hi); font: 600 .85rem var(--ar-serif); letter-spacing: .18em; text-transform: uppercase; }
+.ar-ghost:hover { background: rgba(212,175,106,.1); }
+.ar .card { background: #12151b; border: 1px solid #262a31; border-radius: 12px; }
+.ar .card:hover { border-color: var(--ar-gold); }
+.ar .card .name { font: 600 1.15rem var(--ar-serif); letter-spacing: .04em; }
+.ar .card .tag { font-family: var(--ar-serif); letter-spacing: .16em; color: var(--ar-gold); }
+
+.ar-codex-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; }
+.ar-folio { padding: 34px 32px 30px; border-radius: 12px; border: 1px solid rgba(212,175,106,.28);
+  background: linear-gradient(160deg, #161a21, #101318); }
+.ar-folio h3 { font: 500 1.6rem/1.15 var(--ar-serif); text-transform: uppercase; letter-spacing: .06em; color: var(--ar-gold-hi); margin: 0 0 12px; }
+.ar-folio p { font: 500 1.2rem/1.5 var(--ar-serif); color: #d8cfbf; margin: 0 0 12px; }
+.ar-folio a { color: var(--ar-gold-hi); }
+.ar-folio .mini-coa { margin-top: 18px; background: #0b0d11; border: 1px solid rgba(212,175,106,.3); color: var(--ar-cream);
+  --muted: #a59d8e; --line: rgba(212,175,106,.18); box-shadow: 0 14px 30px rgba(0,0,0,.45); }
+.ar-folio .mini-coa .mono { color: var(--ar-cream); }
+.ar-folio .mini-coa .pass { color: #9fd18b; }
+
+/* other pages (shop, affiliates): the ash drifts on a fixed backdrop behind everything */
+.ar .ar-ash-page { position: fixed; z-index: 0; }
+.ar:not([data-page="home"]) main, .ar:not([data-page="home"]) footer.site, .ar:not([data-page="home"]) .ruo-strip { position: relative; z-index: 1; }
+.ar:not([data-page="home"]) header.site { z-index: 30; }
+.ar .eyebrow { font: 600 .82rem/1.3 var(--ar-serif); letter-spacing: .3em; text-transform: uppercase; color: var(--ar-gold); }
+.ar main h1 { font-family: var(--ar-serif); font-weight: 500; text-transform: uppercase; letter-spacing: .03em; color: var(--ar-cream); }
+
+/* shop */
+.ar-shop-h1 { font-size: clamp(2.4rem, 4vw, 3.4rem); line-height: 1.05; margin: 0 0 12px; }
+.ar .toolbar input, .ar .toolbar select { background: #12151b; border-color: rgba(212,175,106,.28); color: var(--ar-cream); border-radius: 999px; padding: 12px 20px; }
+.ar .toolbar input:focus, .ar .toolbar select:focus { outline: none; border-color: var(--ar-gold); box-shadow: 0 0 0 3px rgba(212,175,106,.15); }
+.ar .chip { background: rgba(10,12,16,.5); border-color: rgba(212,175,106,.3); color: var(--ar-cream); font: 600 .9rem var(--ar-serif); letter-spacing: .1em; text-transform: uppercase; }
+.ar .chip:hover { border-color: var(--ar-gold); }
+.ar .chip[aria-pressed="true"] { background: linear-gradient(180deg, #e9cf95, #cfa962); color: #1b150b; border-color: #cfa962; }
+
+/* affiliate portal: same layout, gold instead of ice blue, over the ash */
+.ar .portal.dark-band { background: transparent; }
+.ar .portal h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); }
+.ar .portal-card { background: linear-gradient(180deg, rgba(212,175,106,.07), rgba(212,175,106,.02)), rgba(17,20,26,.88); border-color: rgba(212,175,106,.24); }
+.ar .portal-card .field { border-color: rgba(212,175,106,.22); background: #0d0f14; }
+.ar .portal-card .field:focus { border-color: var(--ar-gold); box-shadow: 0 0 0 3px rgba(212,175,106,.18); }
+.ar .portal-login { background: linear-gradient(180deg, #e9cf95, #cfa962); border-color: #cfa962; color: #1b150b; box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  font: 700 .9rem var(--ar-serif); letter-spacing: .2em; text-transform: uppercase; }
+.ar .portal-login:hover { background: linear-gradient(180deg, #f1dcaa, #d4af6a); }
+
+@media (max-width: 1100px) {
+  .ar nav.main { gap: 22px; }
+}
+@media (max-width: 860px) {
+  .ar .ruo-strip { height: auto; white-space: normal; }
+  .ar header.site { position: sticky; top: 0; background: rgba(10,12,16,.92); backdrop-filter: blur(10px); }
+  .ar header.site .wrap { height: 64px; }
+  .ar .cart-btn { background: none; border: 0; padding: 0; }
+  .ar-hero { flex-direction: column; align-items: stretch; height: auto; }
+  .ar-hero { background: #111317; }
+  .ar-art { position: relative; right: auto; bottom: auto; width: 100%; max-width: none; height: auto; margin-top: 40px;
+    --ar-fade: linear-gradient(0deg, transparent 0, #000 22%), linear-gradient(90deg, transparent 0, #000 8%); }
+  .ar-hero-copy { padding-top: 0; margin-top: 4px; }
+  .ar-codex-grid { grid-template-columns: 1fr; }
+}

@@ -36,7 +36,7 @@ const RUO_LONG = `All products sold by ${BRAND.name} are intended solely for in 
 // Rendered product shots from tools/vials (one per product option)
 const optSlug = (label) => label.toLowerCase().replace(/[^a-z0-9.]+/g, "-").replace(/^-|-$/g, "");
 // media/ is served with a 1-year immutable cache — bump MEDIA_V whenever the vial renders change
-const MEDIA_V = 12;
+const MEDIA_V = 15;
 // a tracking number → the carrier's tracking page (USPS, UPS, FedEx; anything else goes to a multi-carrier lookup)
 const trackUrl = (t) => {
   const n = String(t).replace(/\s+/g, "");

@@ -30,13 +30,13 @@ Aura Pharma: a static storefront for research-use-only peptides. No build step; 
 
 | page | file | in the header nav? | notes |
 |---|---|---|---|
-| Home | `index.html` | (logo) | dark hero with a drifting starfield and planet horizon (`js/space.js`), live 3D vials on desktop (`js/hero3d.js`, three.js in `vendor/`), best sellers, "Independent lab reports" tile (shows BPC-157's real report) and "For research use only" tile (ends with "Request full lab documentation from support@aurapharma.us") |
-| Shop | `shop.html` | Shop | catalog grid with search, categories, sort |
+| Home | `index.html` | (logo) | classical theme (`renaissance.css`, `js/renaissance.js`): marble statue holding a moving painted flame (`js/fire.js`, `media/renaissance/fire-layer.png`), drifting ash (`js/ash.js`), the sale banner at the top, best sellers, "Independent lab reports" and "For research use only" tiles |
+| Shop | `shop.html` | Shop | catalog grid with search, categories, sort; classical theme over drifting ash |
 | Product | `product.html?id=…` | — | vial / certificate **gallery** (scrolls with the page, not sticky), price, stock, sizes, Specifications (under the buy box), lab report panel for the **selected size** with "Download certificate" |
 | FAQ | `faq.html` | FAQ | |
 | Account | `account.html` | profile icon | sign in / create account / reset password / profile with verification badge and order list (Supabase; see ACCOUNTS.md) |
 | Checkout | `checkout.html` | cart → Checkout | accounts or guests; US address, pay by invoice or crypto, order status at `?order=AO-…` (see CHECKOUT.md) |
-| Affiliate portal | `affiliate.html` | Affiliates | sign-in card (username/email, password with show/hide) over a drifting starfield (no grid). **Not connected:** signing in says the portal isn't open yet |
+| Affiliate portal | `affiliate.html` | Affiliates | sign-in card (username/email, password with show/hide) over drifting ash, classical theme. **Not connected:** signing in says the portal isn't open yet |
 | Lab reports | `coa.html` | no (footer only) | one row per certified product and size, then products still on sample data |
 | Quality | `quality.html` | no (footer only) | what the labs test (purity, identity, content, appearance) |
 

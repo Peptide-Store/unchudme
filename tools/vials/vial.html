@@ -11,7 +11,7 @@
 // Studio product shot of one catalog vial — same sleek vial and lighting as the live home-page hero (js/hero3d.js).
 // window.renderVial({ name, option, lot }) draws the label and renders one frame.
 import * as THREE from 'three';
-import { makeVial, studioEnvironment, FONTS } from './js/vial-model.js';
+import { makeVial, studioEnvironment, FONTS, LOGO } from './js/vial-model.js';
 
 const W = innerWidth, H = innerHeight;
 
@@ -63,8 +63,8 @@ key.castShadow = true; key.shadow.mapSize.set(2048, 2048); key.shadow.radius = 1
 Object.assign(key.shadow.camera, { left: -4, right: 4, top: 6, bottom: -4 });
 scene.add(key);
 // ice-blue rim lights from behind pick out the glass and crimp edges
-const rimL = new THREE.DirectionalLight(0x7cc4ff, 3); rimL.position.set(-6, 4, -6); scene.add(rimL);
-const rimR = new THREE.DirectionalLight(0x7cc4ff, 2.2); rimR.position.set(6, 3, -6); scene.add(rimR);
+const rimL = new THREE.DirectionalLight(0xffd9a0, 3); rimL.position.set(-6, 4, -6); scene.add(rimL);
+const rimR = new THREE.DirectionalLight(0xffd9a0, 2.2); rimR.position.set(6, 3, -6); scene.add(rimR);
 const fill = new THREE.DirectionalLight(0xffffff, 0.6); fill.position.set(4, 2, 5); scene.add(fill);
 
 const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, TABLE_FRONT - TABLE_BACK), new THREE.ShadowMaterial({ opacity: 0.16 }));
@@ -85,7 +85,7 @@ mirror.traverse((o) => { o.castShadow = false; });
 scene.add(mirror);
 
 window.renderVial = (spec) => { vial.drawLabel(spec); renderer.render(scene, camera); };
-await Promise.all(FONTS.map((f) => document.fonts.load(f)));
+await Promise.all([...FONTS.map((f) => document.fonts.load(f)), LOGO.decode()]);
 window.READY = true;
 </script>
 </body></html>

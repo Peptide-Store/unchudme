@@ -4,6 +4,14 @@ What changed on the Aura Pharma storefront and why. Newest first. The certificat
 
 > Public repo: no supplier names, supplier batches, lab task numbers or verification keys here.
 
+## 2026-10-27 — Classical theme and new logo
+
+- **New home page.** Night sky, a marble statue holding a flame, "Create the change You Seek." in Cormorant Garamond, gold accents. The flame is the painted fire kept as its own light layer and animated by a small WebGL shader (`js/fire.js`); the hand never warps. Ash drifts through the sky (`js/ash.js`). Without WebGL the flame shows still; reduced-motion users get a still scene.
+- **New logo:** a flame-formed "A" with a star. The header uses the mark (`media/renaissance/logo-mark.png`) beside AURA / PHARMA; vial labels use the full logo (`media/renaissance/logo-full.png`).
+- **Vials re-rendered in the logo's gold:** gold label bands and name tab, warm black label and cap, clear glass neck (no metal collar). Labels leave out the batch line when a product has no public lot.
+- **Shop and Affiliates** take the same theme (`renaissance.css`, `js/renaissance.js`); the affiliate page's starfield is now drifting ash.
+- **Nav:** Shop · FAQ · Affiliates on themed pages. The sale banner keeps its red look, at the top of the page.
+
 ## 2026-10-20 — Founders 50% Off Sale
 
 - **Site-wide 50% off.** `SALE` in `research/apply-pricing.mjs` (0.5 now; set 0 to end it) is written into `prices.js`. Each size keeps its list price as `was`, and `price` becomes the sale price, so the cart, checkout and `catalog_prices` all charge the sale price. Re-run `node tools/checkout/sync-prices.mjs` after changing it.

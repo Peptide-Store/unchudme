@@ -18,11 +18,11 @@ const MARK = JSON.parse(fs.readFileSync(path.join(SITE, 'app.js'), 'utf8').match
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9.]+/g, '-').replace(/^-|-$/g, '');
 const vialText = (o) => (o === 'Standard vial' ? '' : o.replace(/^(\w+) ([\d.]+ mg) \+ (\w+) ([\d.]+ mg)$/, '$1 $2  +  $3 $4'));
 
-const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css' };
+const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png' };
 const server = http.createServer((req, res) => {
   const url = decodeURIComponent(req.url.split('?')[0]);
   // shared vial model lives in the site's js/; the og card also loads site files under /site/
-  const f = url.startsWith('/site/') ? path.join(SITE, url.slice(6)) : path.join(url.startsWith('/js/') ? SITE : HERE, url);
+  const f = url.startsWith('/site/') ? path.join(SITE, url.slice(6)) : path.join(url.startsWith('/js/') || url.startsWith('/media/') ? SITE : HERE, url);
   fs.readFile(f, (e, d) => { if (e) { res.writeHead(404); return res.end(); } res.writeHead(200, { 'Content-Type': MIME[path.extname(f)] || 'application/octet-stream' }); res.end(d); });
 }).listen(8767);
 

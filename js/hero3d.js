@@ -1,13 +1,13 @@
 // Live home-page hero: three sleek vials floating over the page with idle motion (they don't follow the pointer).
 // mountHero(container, { mark, specs: [left, centre, right], animate }) → Promise<canvas>. Throws if WebGL is unavailable.
 import * as THREE from 'three';
-import { makeVial, studioEnvironment, FONTS } from './vial-model.js';
+import { makeVial, studioEnvironment, FONTS, LOGO } from './vial-model.js';
 
 // centre vial forward and larger, the flanking pair set back
 const SLOTS = [{ x: -2.15, z: -1.1, s: 0.86 }, { x: 0, z: 0.7, s: 1.08 }, { x: 2.15, z: -1.1, s: 0.86 }];
 
 export async function mountHero(container, { mark, specs, animate = true }) {
-  await Promise.all(FONTS.map((f) => document.fonts.load(f)));
+  await Promise.all([...FONTS.map((f) => document.fonts.load(f)), LOGO.decode()]);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: !animate });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setClearColor(0x000000, 0);

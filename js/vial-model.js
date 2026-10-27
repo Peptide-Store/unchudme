@@ -1,13 +1,18 @@
 // Shared vial model: 10 ml-style injection vial with an Aura Pharma label.
 // Used by the catalog photo renderer (tools/vials) and the live home-page hero (js/hero3d.js).
 // makeVial(mark, { sleek, glass }) → { group, drawLabel({ name, option, lot }) }. Group origin sits on the floor, label faces +z.
-//   mark: the site logo's MARK_PARTS path data (from app.js).
-//   sleek: ice-blue anodised crimp, graphite cap, dark label.
+//   mark: no longer used (the label draws media/renaissance/logo-full.png); kept so callers need not change.
+//   sleek: gold anodised crimp, warm black cap, dark label.
 //   glass: 'transmission' (needs an opaque backdrop — catalog photos) or 'additive' (over a transparent canvas — live hero).
 //          Defaults to additive when sleek.
 import * as THREE from 'three';
 
-const BLUE = '#1f4f78', BLUE_LIGHT = '#8cc8f0', INK = '#14181f';
+// the Aura Pharma logo (flame A over AURA / PHARMA, transparent PNG); await LOGO.decode() before drawing a label
+export const LOGO = new Image();
+LOGO.src = new URL('../media/renaissance/logo-full.png', import.meta.url).href;
+
+// label colours, from the logo's gold
+const GOLD = '#9c6a24', GOLD_LIGHT = '#e6b566', INK = '#14181f';
 
 // ---- vial geometry (units ≈ cm/10) ----
 const R = 1, BODY = 3.15;
@@ -18,7 +23,6 @@ const glassProfile = [
 const LH = 2.15, LR = R + 0.006, CW = 4096, CH = Math.round(CW * LH / (2 * Math.PI * LR));
 
 export function makeVial(mark, { sleek = false, glass: glassMode = sleek ? 'additive' : 'transmission' } = {}) {
-  const MARK = Object.fromEntries(Object.entries(mark).map(([k, d]) => [k, new Path2D(d)]));
   const group = new THREE.Group();
   // Transmission glass needs an opaque scene behind it; over a transparent canvas it renders flat grey.
   // The sleek look instead adds only the glass's reflections (black base + additive blend), so the page shows
@@ -47,15 +51,15 @@ export function makeVial(mark, { sleek = false, glass: glassMode = sleek ? 'addi
   const cake = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 0.9, 0.34, 72), new THREE.MeshStandardMaterial({ color: glassMode === 'additive' ? 0x9ea6a3 : 0xf4f4f1, roughness: 0.95 }));
   cake.position.y = 0.2; cake.castShadow = true; group.add(cake);
 
-  // aluminium crimp seal + flip-off cap
+  // crimp seal (clear glass on the sleek vial, so the neck reads see-through) + flip-off cap
   const crimp = new THREE.Mesh(new THREE.CylinderGeometry(0.74, 0.74, 0.5, 96), sleek
-    ? new THREE.MeshPhysicalMaterial({ color: 0x5f9fd4, metalness: 1, roughness: 0.32, clearcoat: 0.2, clearcoatRoughness: 0.2 })
+    ? glassMat
     : new THREE.MeshStandardMaterial({ color: 0xd7d9da, metalness: 1, roughness: 0.28 }));
-  crimp.position.y = BODY + 0.66; crimp.castShadow = true; group.add(crimp);
+  crimp.position.y = BODY + 0.66; crimp.castShadow = !sleek; if (sleek) crimp.renderOrder = 2; group.add(crimp);
   const lip = new THREE.Mesh(new THREE.TorusGeometry(0.74, 0.03, 12, 96), crimp.material);
   lip.rotation.x = Math.PI / 2; lip.position.y = BODY + 0.41; group.add(lip);
   const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.76, 0.77, 0.32, 96), new THREE.MeshPhysicalMaterial(sleek
-    ? { color: 0x242b30, roughness: 0.45, metalness: 0.2, clearcoat: 0.3, clearcoatRoughness: 0.25 }
+    ? { color: 0x221e1a, roughness: 0.45, metalness: 0.2, clearcoat: 0.3, clearcoatRoughness: 0.25 }
     : { color: 0xf2f3f2, roughness: 0.42, clearcoat: 0.3 }));
   cap.position.y = BODY + 1.07; cap.castShadow = true; group.add(cap);
   const capEdge = new THREE.Mesh(new THREE.TorusGeometry(0.75, 0.035, 12, 96), cap.material);
@@ -71,33 +75,13 @@ export function makeVial(mark, { sleek = false, glass: glassMode = sleek ? 'addi
 
   // label palette: white stock for catalog photos, dark stock for the sleek look
   const L = sleek
-    ? { paper: '#222b31', band: BLUE_LIGHT, band2: BLUE, ink: '#f4f6f4', sub: BLUE_LIGHT, pill: BLUE_LIGHT, pillInk: '#0f1215', fine: '#a7b0ba' }
-    : { paper: '#ffffff', band: BLUE, band2: BLUE_LIGHT, ink: INK, sub: BLUE, pill: BLUE, pillInk: '#ffffff', fine: '#3f4651' };
+    ? { paper: '#1c1915', band: GOLD_LIGHT, band2: GOLD, ink: '#f4f6f4', sub: GOLD_LIGHT, pill: GOLD_LIGHT, pillInk: '#0f1215', fine: '#b8ab95' }
+    : { paper: '#ffffff', band: GOLD, band2: GOLD_LIGHT, ink: INK, sub: GOLD, pill: GOLD, pillInk: '#ffffff', fine: '#3f4651' };
 
-  // the site logo (app.js markSVG) without its tile: the label paper is the night sky and hides the legs below the horizon
+  // the logo, centred on x with its top at y, h tall
   function drawMark(x, y, h) {
-    const s = h / 48;
-    const grad = (g, stops) => { stops.forEach(([o, c]) => g.addColorStop(o, c)); return g; };
-    const lin = (x0, y0, x1, y1, stops) => grad(ctx.createLinearGradient(x0, y0, x1, y1), stops);
-    const glow = (draw) => { ctx.save(); ctx.filter = `blur(${1.1 * s}px)`; draw(); ctx.restore(); };
-    const stroke = (path, style, w, blurW) => {
-      ctx.strokeStyle = style;
-      if (blurW) glow(() => { ctx.lineWidth = blurW; ctx.stroke(path); });
-      ctx.lineWidth = w; ctx.stroke(path);
-    };
-    ctx.save(); ctx.translate(x - 24 * s, y); ctx.scale(s, s); ctx.lineJoin = 'miter';
-    ctx.fillStyle = grad(ctx.createRadialGradient(24, 31, 0, 24, 31, 22), [[0, 'rgba(124,196,255,.35)'], [1, 'rgba(124,196,255,0)']]);
-    ctx.fillRect(-8, -4, 64, 60);
-    stroke(MARK.beam, lin(0, -2, 0, 7, [[0, 'rgba(169,220,255,0)'], [1, '#fff']]), 0.7, 2.2);
-    ctx.fillStyle = lin(0, 6, 0, 40, [[0, '#2b3947'], [1, '#06090d']]); ctx.fill(MARK.a);
-    stroke(MARK.edge, lin(0, 5, 0, 36, [[0, '#fff'], [0.55, '#a9dcff'], [1, 'rgba(90,169,230,.25)']]), 0.75, 1.8);
-    stroke(MARK.inner, 'rgba(159,212,255,.35)', 0.5);
-    ctx.fillStyle = L.paper; ctx.fill(MARK.planet);
-    stroke(MARK.rim, lin(-8, 0, 56, 0, [[0, 'rgba(90,169,230,0)'], [0.5, '#e6f5ff'], [1, 'rgba(90,169,230,0)']]), 0.7, 2.4);
-    glow(() => { ctx.fillStyle = 'rgba(191,230,255,.55)'; ctx.beginPath(); ctx.arc(24, 30.3, 2.6, 0, Math.PI * 2); ctx.fill(); });
-    stroke(MARK.flare, 'rgba(207,234,255,.7)', 0.35);
-    ctx.fillStyle = '#fff'; ctx.fill(MARK.star);
-    ctx.restore();
+    const w = h * LOGO.naturalWidth / LOGO.naturalHeight;
+    ctx.drawImage(LOGO, x - w / 2, y, w, h);
   }
 
   function fitText(text, font, maxW, startPx) {
@@ -112,7 +96,7 @@ export function makeVial(mark, { sleek = false, glass: glassMode = sleek ? 'addi
     ctx.fillStyle = L.band2; ctx.fillRect(0, 46, CW, 9); ctx.fillRect(0, CH - 55, CW, 9);
     ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
 
-    drawMark(cx, 150, 460);
+    drawMark(cx, 125, 440);
 
     // compound name in a solid pill
     const pillH = 158, pillY = 612;
@@ -129,7 +113,7 @@ export function makeVial(mark, { sleek = false, glass: glassMode = sleek ? 'addi
     ctx.fillStyle = L.sub; ctx.font = '700 50px Inter'; ctx.letterSpacing = '6px';
     ctx.fillText('FOR RESEARCH USE ONLY', cx, 1040);
     ctx.fillStyle = L.fine; ctx.font = '600 34px Inter'; ctx.letterSpacing = '3px';
-    ctx.fillText(`BATCH ${lot}  ·  STORE AT −20 °C  ·  NOT FOR HUMAN USE`, cx, 1110);
+    ctx.fillText(`${lot ? `BATCH ${lot}  ·  ` : ''}STORE AT −20 °C  ·  NOT FOR HUMAN USE`, cx, 1110);
     tex.needsUpdate = true;
   }
 
