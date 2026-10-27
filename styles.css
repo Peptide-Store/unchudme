@@ -166,7 +166,7 @@ a.float-badge:hover { border-color: var(--accent); }
 .stock-pill { display: inline-flex; align-items: center; gap: 6px; font: 600 .7rem var(--sans); letter-spacing: .01em; white-space: nowrap;
   padding: 4px 10px 4px 9px; border-radius: 999px; background: rgba(255,255,255,.88); color: var(--muted); border: 1px solid var(--line); }
 .stock-pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-.stock-pill.in { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+.stock-pill.in { color: #1f8a4c; border-color: rgba(31,138,76,.35); }
 .stock-pill.back { color: #9a5b12; }
 .card .stock-pill { position: absolute; top: 10px; left: 10px; backdrop-filter: blur(6px); }
 .avail { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 10px 0 4px; font-size: .88rem; }

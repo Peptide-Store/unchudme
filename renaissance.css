@@ -14,6 +14,7 @@
   background: var(--ar-deep);
 }
 .ar .bg { display: none; }
+.ar .dark-band::before { display: none; }   /* no grid texture behind the header and footer */
 
 /* compliance strip: kept, quieter */
 .ar .ruo-strip { background: #07080b; color: #b9ab8e; border-bottom: 1px solid rgba(212,175,106,.18); }
