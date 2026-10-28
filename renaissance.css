@@ -46,17 +46,21 @@
   --ar-fade: linear-gradient(90deg, transparent 0, #000 30%), linear-gradient(0deg, transparent 0, #000 12%), linear-gradient(180deg, transparent 0, #000 14%); }
 /* the edge fade sits on the picture and its haze, not the box, so the fire can rise past the top of the art */
 .ar-art-img, .ar-art::after { -webkit-mask-image: var(--ar-fade); mask-image: var(--ar-fade); -webkit-mask-composite: source-in; mask-composite: intersect; }
-.ar-art-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: left top; filter: saturate(.85) contrast(.94); }
+.ar-art-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: left top; filter: saturate(.7) contrast(.9) brightness(.62); }   /* the statue and arch sit back as scenery */
 .ar-art::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
-  background: radial-gradient(circle at calc(297 / 1245 * 100%) calc(162 / 792 * 100%), transparent 0 10%, rgba(13,16,22,.18) 16%, rgba(13,16,22,.42) 28%); }
+  background: linear-gradient(90deg, transparent 70%, rgba(13,16,22,.6) 90%),   /* the column on the far right recedes */
+    radial-gradient(circle at calc(297 / 1245 * 100%) calc(162 / 792 * 100%), transparent 0 10%, rgba(13,16,22,.18) 16%, rgba(13,16,22,.42) 28%); }
 /* the palm's glow: a canvas over the hand (positions are fractions of the 1245 x 792 art) */
-.ar-flame { z-index: 2; position: absolute; left: calc(150 / 1245 * 100%); top: 0; width: calc(320 / 1245 * 100%); height: calc(290 / 792 * 100%); pointer-events: none; }
+.ar-flame { z-index: 2; opacity: .7; position: absolute; left: calc(150 / 1245 * 100%); top: 0; width: calc(320 / 1245 * 100%); height: calc(290 / 792 * 100%); pointer-events: none; }
 /* the flame (js/fire.js): the painted fire as a light layer, added onto the art. Covers art x 120-480, y 0-320, and
    carries the art's left-edge fade (alpha = art x / 373) so the glow on the hand fades with the hand */
 .ar-fire { z-index: 2; position: absolute; left: calc(120 / 1245 * 100%); top: 0; width: calc(360 / 1245 * 100%); height: calc(320 / 792 * 100%);
-  pointer-events: none; mix-blend-mode: plus-lighter; filter: saturate(.92);
+  pointer-events: none; mix-blend-mode: plus-lighter; filter: saturate(.92); opacity: .72;
   -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.32) 0, #000 70.4%); mask-image: linear-gradient(90deg, rgba(0,0,0,.32) 0, #000 70.4%); }
 @supports not (mix-blend-mode: plus-lighter) { .ar-fire { mix-blend-mode: screen; } }
+/* the vials, cut from the same art (media/renaissance/hero-vials.png), sit in front at full strength with a soft gold glow */
+.ar-vials { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none;
+  filter: brightness(1.2) contrast(1.08) drop-shadow(0 0 22px rgba(212,175,106,.3)) drop-shadow(0 18px 28px rgba(0,0,0,.6)); }
 .ar-ash { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
 .ar-hero-copy { position: relative; z-index: 3; max-width: 1320px; width: 100%; padding-top: 96px; padding-bottom: 30px; }
 
@@ -64,7 +68,10 @@
 .ar-h1 { font: 500 clamp(2.1rem, 3.1vw, 3.6rem)/1 var(--ar-serif); text-transform: uppercase; letter-spacing: .005em; color: var(--ar-cream);
   margin: 0 0 18px; text-shadow: 0 4px 30px rgba(0,0,0,.6); }
 .ar-h1 em { font-style: italic; text-transform: none; font-weight: 500; letter-spacing: -.01em; }
-.ar-lead { font: 500 clamp(1.1rem, 1.35vw, 1.35rem)/1.4 var(--ar-serif); color: var(--ar-cream); max-width: 23em; margin: 0 0 28px; text-shadow: 0 2px 16px rgba(0,0,0,.7); }
+/* the motto in gold serif italic, then the plain facts in small sans */
+.ar-sub { font: italic 500 clamp(1.5rem, 2vw, 2.1rem)/1.15 var(--ar-serif); color: var(--ar-gold-hi); margin: 0 0 14px; text-shadow: 0 2px 16px rgba(0,0,0,.7); }
+.ar-sub em { font-weight: 600; }
+.ar-lead { font: 400 clamp(.92rem, 1vw, 1.02rem)/1.6 var(--sans); letter-spacing: .01em; color: #b9b1a3; max-width: 30em; margin: 0 0 30px; text-shadow: 0 2px 12px rgba(0,0,0,.7); }
 .ar-cta { display: inline-flex; align-items: center; gap: 14px; padding: 15px 32px; border-radius: 999px; text-decoration: none;
   background: linear-gradient(180deg, #e9cf95, #cfa962); color: #1b150b;
   font: 700 .9rem var(--ar-serif); letter-spacing: .2em; text-transform: uppercase; box-shadow: 0 10px 30px rgba(0,0,0,.45); transition: filter .2s, transform .2s; }
