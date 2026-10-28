@@ -21,61 +21,70 @@
 <head>
 <meta charset="utf-8">
 <title>Certificate of Analysis · {{product}} {{size}}</title>
+<!-- house type: Cormorant Garamond for headings, as on the site; Georgia if the font can't load -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   @page { size: 612pt 792pt; margin: 0; }
   * { box-sizing: border-box; }
   html, body { margin: 0; width: 612pt; height: 792pt; }
-  body { font-family: "Liberation Sans", Arial, Helvetica, sans-serif; color: #1a1f2b; font-size: 10.1pt; display: flex; flex-direction: column; }
-  .navy { color: #16457a; font-weight: 700; }
+  /* classical theme: warm black header with the flame mark, gold rules and labels on white paper (prints cleanly) */
+  body { font-family: "Liberation Sans", Arial, Helvetica, sans-serif; color: #1c1915; font-size: 10.1pt; display: flex; flex-direction: column; }
+  .serif { font-family: "Cormorant Garamond", Georgia, serif; }
+  .navy { color: #8a5d1f; font-weight: 700; }   /* label colour (kept the class name the layout uses) */
 
-  header { flex: none; height: 82.5pt; background: #06090e; border-bottom: 2.3pt solid #2b6cb0; position: relative; }
-  header img { position: absolute; left: 63pt; top: 16.5pt; width: 120.5pt; height: 49.5pt; }
-  header h1 { position: absolute; right: 63pt; top: 17pt; margin: 0; color: #fff; font-size: 15.8pt; letter-spacing: .07em; }
+  header { flex: none; height: 82.5pt; background: linear-gradient(180deg, #14110d, #0b0a08); border-bottom: 2.3pt solid #c9a35f; position: relative; }
+  header .brand { position: absolute; left: 58pt; top: 13pt; height: 56pt; display: flex; align-items: center; gap: 9pt; }
+  header .brand img { height: 56pt; width: auto; }
+  header .brand b { display: block; font: 600 21pt/1 "Cormorant Garamond", Georgia, serif; letter-spacing: .3em; color: #efe6d4; }
+  header .brand i { display: block; font: 600 7.6pt/1 "Cormorant Garamond", Georgia, serif; font-style: normal; letter-spacing: .62em; color: #d4af6a; margin-top: 4pt; }
+  header h1 { position: absolute; right: 63pt; top: 0; height: 80pt; display: flex; align-items: center; margin: 0;
+    font: 600 17pt/1 "Cormorant Garamond", Georgia, serif; letter-spacing: .14em; color: #e6c88e; }
 
   /* main runs from below the header to the footer; the signature row sits at its foot, or below the content when it's long */
   main { margin: 18.5pt 63pt 0; flex: 1 0 auto; display: flex; flex-direction: column; }
   .top { display: flex; justify-content: space-between; align-items: flex-start; height: 40pt; }
   .task { display: flex; align-items: center; gap: 14pt; }
   .task .navy { font-size: 11.2pt; }
-  .task .val { background: #f1f4f8; border: .75pt solid #e3e8ef; width: 156pt; height: 23.8pt; padding: 0 14pt; display: flex; align-items: center; font-size: 10.5pt; }
+  .task .val { background: #faf6ee; border: .75pt solid #e6d9bf; width: 156pt; height: 23.8pt; padding: 0 14pt; display: flex; align-items: center; font-size: 10.5pt; font-weight: 700; letter-spacing: .04em; }
   .dates { display: grid; grid-template-columns: auto 71pt; gap: 4.8pt 7pt; font-size: 9.4pt; text-align: right; align-items: center; }
-  .dates span:nth-child(even) { background: #f1f4f8; text-align: center; padding: 1.5pt 0; font-weight: 400; color: #1a1f2b; }
+  .dates span:nth-child(even) { background: #faf6ee; text-align: center; padding: 1.5pt 0; font-weight: 400; color: #1c1915; }
 
   /* product and test tables, in the style of a manufacturer's COA */
-  table.kv td, table.tests td, table.tests th { border: .8pt solid #b9c7d8; height: 17pt; padding: 1.5pt 9pt; font-size: 9.2pt; }
-  table.kv td:first-child { width: 150pt; color: #16457a; font-weight: 700; background: #f4f7fb; }
-  table.tests th { background: #16457a; color: #fff; text-align: left; font-size: 8.6pt; letter-spacing: .02em; height: 18pt; }
+  table.kv td, table.tests td, table.tests th { border: .8pt solid #e2d4b8; height: 17pt; padding: 1.5pt 9pt; font-size: 9.2pt; }
+  table.kv td:first-child { width: 150pt; color: #8a5d1f; font-weight: 700; background: #faf6ee; }
+  table.tests th { background: #1c1915; color: #e6c88e; text-align: left; font-size: 8.6pt; letter-spacing: .06em; height: 18pt; border-color: #1c1915; }
   table.tests td:first-child { width: auto; }
   table.tests td.res { font-weight: 700; }
-  .abbr { font-size: 7.4pt; color: #6b7280; margin: 4pt 0 0; }
+  .abbr { font-size: 7.4pt; color: #7a7266; margin: 4pt 0 0; }
   .conclusion { margin: 8pt 0 0; padding: 7pt 10pt; background: #eef6ee; border-left: 2.3pt solid #2f7d32; font-size: 9.4pt; }
 
-  h2 { display: flex; align-items: center; gap: 7pt; margin: 11pt 0 4pt; font-size: 10.5pt; color: #16457a; }
-  h2::after { content: ""; flex: 1; height: .8pt; background: #e5e7eb; }
-  .box { background: #f1f4f8; border-left: 2.3pt solid #16457a; padding: 8pt 12pt; font-size: 9.4pt; line-height: 1.45; }
+  h2 { display: flex; align-items: center; gap: 7pt; margin: 10pt 0 4pt; font: 700 11.6pt/1 "Cormorant Garamond", Georgia, serif;
+    letter-spacing: .12em; text-transform: uppercase; color: #8a5d1f; }
+  h2::after { content: ""; flex: 1; height: .8pt; background: linear-gradient(90deg, #d4af6a, rgba(212,175,106,.15)); }
+  .box { background: #faf6ee; border-left: 2.3pt solid #c9a35f; padding: 8pt 12pt; font-size: 9.4pt; line-height: 1.45; }
   .box.comments { min-height: 30pt; }
   .box p { margin: 0 0 5pt; } .box p:last-child { margin: 0; }
 
   table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-  td { border: 1.1pt solid #2b6cb0; height: 27.5pt; padding: 0 12.5pt; }
+  td { border: 1.1pt solid #c9a35f; height: 27.5pt; padding: 0 12.5pt; }
   td:first-child { width: 218.8pt; }
 
   .bottom { margin-top: auto; padding-top: 14pt; display: flex; justify-content: space-between; align-items: flex-end; }
   .sign { width: 157.5pt; text-align: center; }
   .sign .navy { font-size: 9.8pt; }
   .sign img { display: block; height: 44pt; margin: 2pt auto -4pt; }
-  .sign .line { border-top: .8pt solid #1a1f2b; padding-top: 4pt; color: #6b7280; font-size: 7.5pt; }
+  .sign .line { border-top: .8pt solid #1c1915; padding-top: 4pt; color: #7a7266; font-size: 7.5pt; }
   .conducted { display: flex; align-items: center; gap: 7pt; margin-bottom: 6pt; }
   .conducted .navy { font-size: 9.8pt; }
-  .conducted .val { background: #f1f4f8; padding: 3pt 13pt; }
+  .conducted .val { background: #faf6ee; padding: 3pt 13pt; }
 
-  footer { flex: none; margin: 10pt 63pt 34pt; border-top: 1.5pt solid #16457a; padding-top: 10pt; font-size: 7.1pt; line-height: 12pt; color: #6b7280; }
+  footer { flex: none; margin: 10pt 63pt 34pt; border-top: 1.5pt solid #c9a35f; padding-top: 10pt; font-size: 7.1pt; line-height: 12pt; color: #7a7266; }
   footer strong { color: #b02a37; display: block; }
 </style>
 </head>
 <body>
 <header>
-  <img src="logo.png" alt="Aura Pharma">
+  <div class="brand"><img src="../../media/renaissance/logo-mark.png" alt=""><div><b>AURA</b><i>PHARMA</i></div></div>
   <h1>CERTIFICATE OF ANALYSIS</h1>
 </header>
 <main>
@@ -116,7 +125,7 @@
 <footer>
   <strong>FOR LABORATORY AND RESEARCH USE ONLY. NOT FOR HUMAN OR VETERINARY CONSUMPTION.</strong>
   Analysis performed by an independent third-party laboratory. Aura Pharma issued this certificate from that laboratory's report, which is kept on file.
-  This certificate reflects analysis of the specific sample tested. Reproduction except in full is prohibited. Aura Pharma · aurapharma.co
+  This certificate reflects analysis of the specific sample tested. Reproduction except in full is prohibited. Aura Pharma · aurapharma.us
 </footer>
 </body>
 </html>
