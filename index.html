@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aura Pharma Peptides</title>
 <meta name="description" content="Research peptides, independently lab-tested for purity (HPLC), identity (mass spec) and content. Every order ships with a printed copy of the lab report.">
-<!-- Classical theme: art media/renaissance/hero-statue.jpg; motion js/ash.js (drifting ash, the fireball's light) and js/fire.js (the painted flame, kept moving). -->
+<!-- Classical theme: art media/renaissance/angel-hero.jpg (the angel, dimmed, with the vials lit on their ledge); motion: the mist drifting over the far-right clouds (inline script below). -->
 <!-- link previews (iMessage, Slack, socials): 1200×630 card rendered by tools/vials `node render.mjs og` -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Aura Pharma">
@@ -20,17 +20,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;750;800&family=IBM+Plex+Mono:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="renaissance.css">
+<style>
+/* angel art: crop of the concept (media/renaissance/angel-hero.jpg, 1299 x 784), warm black band to match it */
+.ar-hero { background: radial-gradient(900px 700px at 66% 40%, #17140f, transparent 70%), #0b0a09; }
+.ar-art { right: 1%; height: 94%; aspect-ratio: 1299 / 784;
+  --ar-fade: linear-gradient(90deg, transparent 0, #000 22%), linear-gradient(0deg, transparent 0, #000 6%), linear-gradient(180deg, transparent 0, #000 10%); }
+/* the angel sits back as scenery, like the statue on the live hero: dimmed, softened, a light haze over the figure */
+.ar-art-img { filter: saturate(.7) contrast(.9) brightness(.6); }
+.ar-art::after { background: radial-gradient(ellipse 34% 46% at 42% 40%, rgba(11,10,9,.28), transparent 100%); }
+/* the vials and their rock stay at full strength: the same art undimmed, shown in a soft pool (vials at art x 720-1130, y 470-745) */
+.ar-fore { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: left top; z-index: 2; pointer-events: none;
+  filter: saturate(.9) contrast(1.03);
+  -webkit-mask-image: radial-gradient(ellipse 22% 30% at 71% 79%, #000 45%, transparent 100%), var(--ar-fade);
+  mask-image: radial-gradient(ellipse 22% 30% at 71% 79%, #000 45%, transparent 100%), var(--ar-fade);
+  -webkit-mask-composite: source-in; mask-composite: intersect; }
+/* the clouds on the far right, drifting: a soft mist layer screened over the painted clouds */
+.ar-cloud { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(90deg, transparent 70%, #000 90%), linear-gradient(180deg, transparent 4%, #000 22%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent 70%, #000 90%), linear-gradient(180deg, transparent 4%, #000 22%, #000 88%, transparent);
+  -webkit-mask-composite: source-in; mask-composite: intersect; }
+@media (max-width: 760px) { .ar-hero { background: #0b0a09; } .ar-art { aspect-ratio: 1299 / 784; } }
+</style>
 </head>
 <body data-page="home" class="ar">
 <main>
   <section class="ar-hero">
     <div class="ar-art" aria-hidden="true">
-      <img class="ar-art-img" src="media/renaissance/hero-statue.jpg" alt="" width="1245" height="792">
-      <canvas class="ar-flame"></canvas>
-      <canvas class="ar-fire"></canvas>
-      <img class="ar-fore" src="media/renaissance/hero-statue.jpg" alt="" width="1245" height="792">
+      <img class="ar-art-img" src="media/renaissance/angel-hero.jpg" alt="" width="1299" height="784">
+      <canvas class="ar-cloud"></canvas>
+      <img class="ar-fore" src="media/renaissance/angel-hero.jpg" alt="" width="1299" height="784">
     </div>
-    <canvas class="ar-ash" aria-hidden="true"></canvas>
     <div class="wrap ar-hero-copy">
       <div class="ar-kicker">Research · Peptides · Third-party tested</div>
       <h1 class="ar-h1">Premium<br><em>Peptides.</em></h1>
@@ -73,7 +92,42 @@
 <script src="stock.js"></script>
 <script src="app.js"></script>
 <script src="js/renaissance.js"></script>
-<script src="js/ash.js"></script>
-<script src="js/fire.js"></script>
+<script>
+// drifting cloud mist: a tileable soft-noise texture, two layers scrolled slowly leftward as if in wind
+(() => {
+  const cv = document.querySelector(".ar-cloud"), cx = cv.getContext("2d");
+  const N = 256, tex = document.createElement("canvas"); tex.width = tex.height = N;
+  const tx = tex.getContext("2d"), im = tx.createImageData(N, N);
+  const G = 8, grid = (s) => Array.from({ length: s * s }, () => Math.random());
+  const oct = [[4, .5], [8, .28], [16, .14], [32, .08]].map(([s, a]) => ({ s, a, g: grid(s) }));
+  const smooth = (t) => t * t * (3 - 2 * t);
+  const val = ({ s, g }, x, y) => {      // wrapping value noise at s cells across the tile
+    const fx = x / N * s, fy = y / N * s, x0 = Math.floor(fx), y0 = Math.floor(fy), u = smooth(fx - x0), v = smooth(fy - y0);
+    const at = (i, j) => g[((j % s) + s) % s * s + ((i % s) + s) % s];
+    return (at(x0, y0) * (1 - u) + at(x0 + 1, y0) * u) * (1 - v) + (at(x0, y0 + 1) * (1 - u) + at(x0 + 1, y0 + 1) * u) * v;
+  };
+  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+    let n = 0; for (const o of oct) n += val(o, x, y) * o.a;
+    const a = Math.max(0, Math.min(1, (n - .42) / .4));    // wisps, not a flat fog
+    const i = (y * N + x) * 4; im.data[i] = 120; im.data[i + 1] = 106; im.data[i + 2] = 88; im.data[i + 3] = a * a * 255;
+  }
+  tx.putImageData(im, 0, 0);
+  const fit = () => { const r = cv.getBoundingClientRect(); cv.width = Math.round(r.width / 2); cv.height = Math.round(r.height / 2); };
+  addEventListener("resize", fit); fit();
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const layer = (t, size, speed, alpha, yo) => {
+    const w = size, off = ((t * speed) % w + w) % w;
+    cx.globalAlpha = alpha;
+    for (let x = -off; x < cv.width; x += w) for (let y = yo + Math.sin(t / 9000) * 6 - w; y < cv.height; y += w) cx.drawImage(tex, x, y, w, w);
+  };
+  const draw = (t) => {
+    cx.clearRect(0, 0, cv.width, cv.height);
+    layer(t, cv.height * .9, .0035, .5, 0);
+    layer(t + 4e4, cv.height * .55, .006, .32, cv.height * .3);
+    if (!still) requestAnimationFrame(draw);
+  };
+  requestAnimationFrame(draw);
+})();
+</script>
 </body>
 </html>

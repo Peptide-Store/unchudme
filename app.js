@@ -96,15 +96,14 @@ const ACCOUNT_ICON = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none
 function renderChrome() {
   setFavicon();
   const page = document.body.dataset.page;
-  const here = document.body.dataset.nav || page;     // a page can mark a different tab than its content type
-  const nav = [["shop", "shop.html", "Shop"], ["angel", "angel.html", "Angel"], ["faq", "faq.html", "FAQ"], ["affiliate", "affiliate.html", "Affiliates"]];
+  const nav = [["shop", "shop.html", "Shop"], ["faq", "faq.html", "FAQ"], ["affiliate", "affiliate.html", "Affiliates"]];
   document.body.insertAdjacentHTML("afterbegin", `
     <div class="bg" aria-hidden="true"></div>
     <div class="ruo-strip">${RUO_SHORT}</div>
     <header class="site dark-band"><div class="wrap">
       ${logoHTML()}
       <button class="menu-btn" aria-label="Menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-      <nav class="main">${nav.map(([k, h, l]) => `<a href="${h}"${k === here ? ' aria-current="page"' : ""}>${l}</a>`).join("")}</nav>
+      <nav class="main">${nav.map(([k, h, l]) => `<a href="${h}"${k === page ? ' aria-current="page"' : ""}>${l}</a>`).join("")}</nav>
       <a class="account-btn" href="account.html" aria-label="Account">${ACCOUNT_ICON}</a>
       <button class="cart-btn" aria-label="Open cart"><svg class="cart-ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h9.6a1 1 0 0 0 1-.8L21 7H6.2"/></svg><span class="cart-word">Cart (</span><span id="cart-count">0</span><span class="cart-word">)</span></button>
     </div></header>`);

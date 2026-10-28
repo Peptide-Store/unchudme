@@ -8,10 +8,10 @@
   });
   document.querySelectorAll(".wordmark b").forEach((b) => { b.textContent = "AURA"; });
 
-  const page = document.body.dataset.page, here = document.body.dataset.nav || page;   // data-nav: the tab to mark, when it differs from the content
+  const page = document.body.dataset.page;
   const nav = document.querySelector("nav.main");
-  if (nav) nav.innerHTML = [["shop.html", "Shop", "shop"], ["angel.html", "Angel", "angel"], ["faq.html", "FAQ", "faq"], ["affiliate.html", "Affiliates", "affiliate"]]
-    .map(([h, l, p]) => `<a href="${h}"${p === here ? ' aria-current="page"' : ""}>${l}</a>`).join("");
+  if (nav) nav.innerHTML = [["shop.html", "Shop", "shop"], ["faq.html", "FAQ", "faq"], ["affiliate.html", "Affiliates", "affiliate"]]
+    .map(([h, l, p]) => `<a href="${h}"${p === page ? ' aria-current="page"' : ""}>${l}</a>`).join("");
 
   // home: the header floats over the hero, so start it below the sale banner at the top of the page
   const sale = document.querySelector(".sale-banner");
