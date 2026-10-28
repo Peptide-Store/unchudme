@@ -155,6 +155,13 @@
 .ar .spec td { color: var(--ar-cream); }
 .ar .spec th, .ar .spec td, .ar .coa-table th, .ar .coa-table td { border-color: rgba(212,175,106,.16); }
 .ar .coa-panel { background: rgba(17,20,26,.88); border-color: rgba(212,175,106,.24); }
+/* structure without motion: the product sits on a charcoal band, related products on a darker band below a gold hairline */
+.ar[data-page="product"] { background: #0c0d10; }
+.ar[data-page="product"] main { background: radial-gradient(1200px 520px at 30% 0, #22252b, #191b20 60%, #16181c); padding-bottom: 64px;
+  border-bottom: 1px solid rgba(212,175,106,.22); }
+.ar[data-page="product"] main > section { background: #0c0d10; margin-bottom: -64px; box-shadow: 0 -1px 0 rgba(212,175,106,.22); margin-top: 64px; }
+.ar[data-page="product"] .pdp .vial-lg { box-shadow: 0 24px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(212,175,106,.28); }
+.ar[data-page="product"] .notice, .ar[data-page="product"] .coa-panel { background: rgba(10,11,14,.55); }
 .ar[data-page="product"] main section h2 { font: 500 clamp(2rem, 3.6vw, 3rem)/1.05 var(--ar-serif); text-transform: uppercase; letter-spacing: .02em; color: var(--ar-cream); }
 
 /* research-use pop-up on themed pages */
