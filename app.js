@@ -246,10 +246,11 @@ document.addEventListener("click", (e) => {
 
 /* ---------- pages ---------- */
 // Founders sale banner at the top of the home and shop pages; the home one links through to the shop.
+// On phones the .sale-long parts are hidden so it fits on one short line.
 function saleBanner(link) {
   if (!saleOff()) return;
-  const inner = `<span class="sale-pct">${saleOff()}% OFF</span><span class="sale-copy"><b>Founders ${saleOff()}% Off Sale.</b> Every vial site-wide is ${saleOff()}% off, no code needed.</span>`;
-  $("main").insertAdjacentHTML("afterbegin", link ? `<a class="sale-banner" href="shop.html">${inner}<span class="sale-cta">Shop the sale →</span></a>` : `<div class="sale-banner">${inner}</div>`);
+  const inner = `<span class="sale-pct">${saleOff()}% OFF</span><span class="sale-copy"><b>Founders ${saleOff()}% Off Sale.</b><span class="sale-long"> Every vial site-wide is ${saleOff()}% off, no code needed.</span></span>`;
+  $("main").insertAdjacentHTML("afterbegin", link ? `<a class="sale-banner" href="shop.html">${inner}<span class="sale-cta">Shop<span class="sale-long"> the sale</span> →</span></a>` : `<div class="sale-banner">${inner}</div>`);
 }
 const pages = {
   home() {

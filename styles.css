@@ -433,4 +433,10 @@ main.portal + footer.site, .portal ~ footer.site { margin-top: 0; }
 .sale-copy { font-size: .98rem; }
 .sale-cta { font-weight: 650; text-decoration: underline; text-underline-offset: 3px; }
 .sale-banner:hover .sale-cta { text-decoration-thickness: 2px; }
-@media (max-width: 640px) { .sale-banner { gap: 8px 12px; } .sale-pct { font-size: 1.1rem; } .sale-copy { font-size: .88rem; } }
+/* phones: one short line (the long sentence and "the sale" drop out), so the banner doesn't eat the screen */
+@media (max-width: 640px) {
+  .sale-banner { gap: 6px 10px; padding: 8px 12px; }
+  .sale-pct { font-size: .8rem; padding: 3px 7px; border-width: 1.5px; border-radius: 7px; }
+  .sale-copy, .sale-cta { font-size: .82rem; }
+  .sale-long { display: none; }
+}

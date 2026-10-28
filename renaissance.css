@@ -196,5 +196,6 @@
   .ar-art { position: relative; right: auto; bottom: auto; width: 100%; max-width: none; height: auto; margin-top: 40px;
     --ar-fade: linear-gradient(0deg, transparent 0, #000 22%), linear-gradient(90deg, transparent 0, #000 8%); }
   .ar-hero-copy { padding-top: 0; margin-top: 4px; }
+  .ar-kicker-mid { display: none; }   /* phones: "Research · Third-party tested" fits on one line */
   .ar-codex-grid { grid-template-columns: 1fr; }
 }

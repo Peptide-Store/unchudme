@@ -51,7 +51,7 @@
       <img class="ar-fore" src="media/renaissance/angel-hero.jpg" alt="" width="1299" height="784">
     </div>
     <div class="wrap ar-hero-copy">
-      <div class="ar-kicker">Research · Peptides · Third-party tested</div>
+      <div class="ar-kicker">Research<span class="ar-kicker-mid"> · Peptides</span> · Third-party tested</div>
       <h1 class="ar-h1">Premium<br><em>Peptides.</em></h1>
       <p class="ar-sub">Create the Change <em>You Seek.</em></p>
       <p class="ar-lead">Research-grade peptides, independently tested for purity, identity, and content.</p>
@@ -98,7 +98,7 @@
   const cv = document.querySelector(".ar-cloud"), cx = cv.getContext("2d");
   const N = 256, tex = document.createElement("canvas"); tex.width = tex.height = N;
   const tx = tex.getContext("2d"), im = tx.createImageData(N, N);
-  const G = 8, grid = (s) => Array.from({ length: s * s }, () => Math.random());
+  const grid = (s) => Array.from({ length: s * s }, () => Math.random());
   const oct = [[4, .5], [8, .28], [16, .14], [32, .08]].map(([s, a]) => ({ s, a, g: grid(s) }));
   const smooth = (t) => t * t * (3 - 2 * t);
   const val = ({ s, g }, x, y) => {      // wrapping value noise at s cells across the tile
@@ -115,10 +115,15 @@
   const fit = () => { const r = cv.getBoundingClientRect(); cv.width = Math.round(r.width / 2); cv.height = Math.round(r.height / 2); };
   addEventListener("resize", fit); fit();
   const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // one repeating pattern, not a grid of tiles: separate tiles leave a seam line at each edge as they drift
+  const pat = cx.createPattern(tex, "repeat");
   const layer = (t, size, speed, alpha, yo) => {
-    const w = size, off = ((t * speed) % w + w) % w;
+    const k = size / N;
     cx.globalAlpha = alpha;
-    for (let x = -off; x < cv.width; x += w) for (let y = yo + Math.sin(t / 9000) * 6 - w; y < cv.height; y += w) cx.drawImage(tex, x, y, w, w);
+    cx.setTransform(k, 0, 0, k, -t * speed, yo + Math.sin(t / 9000) * 6);
+    cx.fillStyle = pat;
+    cx.fillRect((t * speed) / k - N, -(yo + 6) / k - N, cv.width / k + 2 * N, cv.height / k + 2 * N);
+    cx.setTransform(1, 0, 0, 1, 0, 0);
   };
   const draw = (t) => {
     cx.clearRect(0, 0, cv.width, cv.height);
