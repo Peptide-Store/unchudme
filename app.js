@@ -87,7 +87,9 @@ const logoHTML = () => `<a class="logo" href="index.html" aria-label="${esc(BRAN
 const markLink = (size) => `<a class="logo" href="index.html" aria-label="${esc(BRAND.name)} home">${markSVG(size, 'class="logo-mark"', { tile: false })}</a>`;
 
 // the flame "A" on a dark tile (media/renaissance/favicon.png, apple-touch-icon.png)
+// (also linked statically in each page's <head>; this covers any page without it)
 function setFavicon() {
+  if (document.querySelector('link[rel="icon"]')) return;
   document.head.insertAdjacentHTML("beforeend", `<link rel="icon" type="image/png" href="media/renaissance/favicon.png?v=${MEDIA_V}"><link rel="apple-touch-icon" href="media/renaissance/apple-touch-icon.png?v=${MEDIA_V}">`);
 }
 

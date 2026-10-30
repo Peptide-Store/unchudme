@@ -6,7 +6,7 @@ export const config = { matcher: '/((?!api/crypto-webhook).*)' };
 
 const PASSWORD = 'aurafarm';
 // served without the password: the logo and tab icons the gate page itself shows
-const PUBLIC = new Set(['/media/renaissance/logo-mark.png', '/media/renaissance/favicon.png', '/media/renaissance/apple-touch-icon.png']);
+const PUBLIC = new Set(['/favicon.ico', '/media/renaissance/logo-mark.png', '/media/renaissance/favicon.png', '/media/renaissance/apple-touch-icon.png']);
 const COOKIE = 'aura_gate';
 const MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 const enc = new TextEncoder();
@@ -53,7 +53,7 @@ function gate(next, error, status) {
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow">
 <title>Aura Pharma</title>
-<link rel="icon" type="image/png" href="/media/renaissance/favicon.png"><link rel="apple-touch-icon" href="/media/renaissance/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/media/renaissance/favicon.png?v=16"><link rel="apple-touch-icon" href="/media/renaissance/apple-touch-icon.png?v=16">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
